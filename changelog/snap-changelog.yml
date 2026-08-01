@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+api: Snapchat Marketing API
+scheme: dated-announcements
+current_version: v1
+subscribe: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+entries:
+  - date: '2026-04'
+    highlights:
+      - "FEED placement added to placements bundlable with CHAT_FEED for lower-funnel optimization goals (Pixel, App events), effective 6 May 2026."
+    breaking: false
+  - date: '2025-10'
+    highlights:
+      - "Snap begins enforcing inclusion of the CHAT_FEED placement when Ad Squads specify individual placements via custom configuration, from 27 November 2025."
+    breaking: true
+  - date: '2025-06'
+    highlights:
+      - "Optimization Goal and Conversion Window eligibility/targeting spec changes given a release date of 23 September 2025."
+    breaking: true
+  - date: '2025-03'
+    highlights:
+      - "Introduced Optimization Goal and Conversion Window eligibility changes; validation at point of creation will reject ineligible optimization goals / conversion windows. Recommends implementing the eligibility endpoint check."
+    breaking: true
+notes: >-
+  Snap publishes Marketing API changes on the Announcements page with forward
+  effective dates and an email subscription. Only the recent window is captured
+  here.

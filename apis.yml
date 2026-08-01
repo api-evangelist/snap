@@ -1,7 +1,19 @@
 aid: snap
 name: Snap
-description: Snap is a company surfaced as a portfolio company of general-catalyst and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Snap Inc. is the technology company behind Snapchat, Bitmoji, Spectacles, and
+  Lens Studio. Its Snap for Developers program exposes several public APIs and
+  SDKs: the Snapchat Marketing API (Ads API, Ads Gallery API, Conversions API,
+  and Public Profile API) for programmatically managing organizations, ad
+  accounts, campaigns, ad squads, ads, creatives, audiences, measurement, and
+  server-to-server conversion events; Snap Kit / Login Kit for OAuth 2.0 and
+  OpenID Connect powered "Login with Snapchat", Creative Kit, and Bitmoji Kit;
+  and Camera Kit for embedding Snap's augmented-reality Lenses into third-party
+  apps and web experiences. The Marketing API is an OAuth 2.0 REST API served
+  from adsapi.snapchat.com/v1 with cursor pagination and a structured request
+  envelope. First-party SDKs are published for Java, Python, PHP, JavaScript
+  (Camera Kit on npm), Android, and iOS. Snap was surfaced as a portfolio
+  company of General Catalyst and enriched into the API Evangelist network.
 url: https://raw.githubusercontent.com/api-evangelist/snap/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,14 +21,148 @@ x-backed-by:
 - general-catalyst
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: open
+  trial: false
+  try_now: false
+  public: true
+  label: Open access
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
+image: https://developers.snap.com/img/snap-developer-logo.png
 tags:
 - Company
-apis: []
+- Advertising
+- Marketing
+- Social Media
+- Augmented Reality
+- Camera
+- Authentication
+- Identity
+- Conversions
+- Attribution
+- SDKs
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Snapchat Marketing API
+  description: >-
+    OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad
+    accounts, campaigns, ad squads, ads, creatives, media, audience segments,
+    measurement/reporting, the Conversions API (server-to-server event
+    tracking), the Ads Gallery API, and the Public Profile API. Served from
+    adsapi.snapchat.com/v1 with cursor pagination (limit 50-1000) and a
+    request_status/request_id response envelope.
+  humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+  baseURL: https://adsapi.snapchat.com/v1
+  tags:
+  - Advertising
+  - Marketing
+  - Conversions
+  - Attribution
+  properties:
+  - type: Authentication
+    url: authentication/snap-authentication.yml
+  - type: OAuthScopes
+    url: scopes/snap-scopes.yml
+  - type: Conventions
+    url: conventions/snap-conventions.yml
+  - type: ErrorCatalog
+    url: errors/snap-error-codes.yml
+  - type: DataModel
+    url: data-model/snap-data-model.yml
+  - type: MCPServer
+    url: mcp/snap-mcp.yml
+- name: Snap Kit / Login Kit
+  description: >-
+    OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat",
+    plus Creative Kit and Bitmoji Kit. Lets third-party apps authenticate
+    Snapchatters, fetch approved profile fields, and share content back into
+    Snapchat.
+  humanURL: https://developers.snap.com/snap-kit/login-kit/Technical-Documentation/OAuth2
+  baseURL: https://api.snapkit.com
+  tags:
+  - Authentication
+  - Identity
+  - OpenID Connect
+- name: Camera Kit
+  description: >-
+    SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio
+    content) into third-party mobile and web apps, including a push-to-device
+    API for managing Lens groups and experiences.
+  humanURL: https://developers.snap.com/camera-kit/home
+  baseURL: https://camera-kit-api.snapar.com
+  tags:
+  - Augmented Reality
+  - Camera
+  - SDK
+common:
+- type: DeveloperPortal
+  url: https://developers.snap.com
+- type: Documentation
+  url: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+- type: APIReference
+  url: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+- type: GettingStarted
+  url: https://developers.snap.com/api/marketing-api/Ads-API/quick-start
+- type: Authentication
+  url: authentication/snap-authentication.yml
+- type: OAuthScopes
+  url: scopes/snap-scopes.yml
+- type: SDKs
+  url: packages/snap-packages.yml
+- type: Packages
+  url: packages/snap-packages.yml
+- type: Conventions
+  url: conventions/snap-conventions.yml
+- type: ErrorCatalog
+  url: errors/snap-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/snap-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/snap-lifecycle.yml
+- type: ChangeLog
+  url: changelog/snap-changelog.yml
+- type: Conformance
+  url: conformance/snap-conformance.yml
+- type: MCPServer
+  url: mcp/snap-mcp.yml
+- type: LLMsTxt
+  url: llms/snap-llms.txt
+- type: WellKnown
+  url: well-known/snap-well-known.yml
+- type: DomainSecurity
+  url: security/snap-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/snap-vulnerability-disclosure.yml
+- type: Security
+  url: security/snap-vulnerability-disclosure.yml
+- type: DataModel
+  url: data-model/snap-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: GitHubOrganization
+  url: https://github.com/Snapchat
+- type: Support
+  url: https://businesshelp.snapchat.com
+- type: SignUp
+  url: https://ads.snapchat.com
+- type: TermsOfService
+  url: https://snap.com/terms
+- type: PrivacyPolicy
+  url: https://snap.com/privacy/privacy-policy

@@ -1,0 +1,49 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: >-
+  Derived from documented Snapchat Marketing API operations
+  (developers.snap.com/api/marketing-api). No official Snap-hosted MCP server was
+  found as of 2026-07-21.
+server:
+  name: snap-marketing
+  transport: http
+  url: null
+auth:
+  type: oauth2
+  ref: authentication/snap-authentication.yml
+tools:
+  - name: list_organizations
+    description: List organizations the user can access (optionally with ad accounts).
+    source_operation: "GET /v1/me/organizations"
+  - name: list_ad_accounts
+    description: List ad accounts under an organization.
+    source_operation: "GET /v1/organizations/{organization_id}/adaccounts"
+  - name: list_campaigns
+    description: List campaigns under an ad account.
+    source_operation: "GET /v1/adaccounts/{ad_account_id}/campaigns"
+  - name: create_campaign
+    description: Create one or more campaigns under an ad account.
+    source_operation: "POST /v1/adaccounts/{ad_account_id}/campaigns"
+  - name: create_ad_squad
+    description: Create one or more ad squads under a campaign.
+    source_operation: "POST /v1/campaigns/{campaign_id}/adsquads"
+  - name: create_creative
+    description: Create one or more creatives under an ad account.
+    source_operation: "POST /v1/adaccounts/{ad_account_id}/creatives"
+  - name: upload_media
+    description: Create and upload media (video/image) for creatives.
+    source_operation: "POST /v1/adaccounts/{ad_account_id}/media + POST /v1/media/{media_id}/upload"
+  - name: create_ad
+    description: Create one or more ads under an ad squad.
+    source_operation: "POST /v1/adsquads/{ad_squad_id}/ads"
+  - name: list_ads
+    description: List ads under an ad account, campaign, or ad squad (cursor paginated).
+    source_operation: "GET /v1/adaccounts/{ad_account_id}/ads"
+  - name: send_conversion_events
+    description: Send server-to-server conversion events (Conversions API).
+    source_operation: "Conversions API events endpoint"
+notes: >-
+  Candidate tool surface only — not an endorsement of a published MCP server.
+  Tools map to documented Marketing API operations and would require the
+  snapchat-marketing-api / snapchat-offline-conversions-api OAuth scopes.

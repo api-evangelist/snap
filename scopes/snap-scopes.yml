@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/authentication
+docs: https://developers.snap.com/api/marketing-api/Ads-API/authentication
+api: Snapchat Marketing API
+flow: authorizationCode
+authorization_endpoint: https://accounts.snapchat.com/login/oauth2/authorize
+token_endpoint: https://accounts.snapchat.com/login/oauth2/access_token
+delimiter: space
+scopes:
+  - name: snapchat-marketing-api
+    description: Read and write access to the Snapchat Marketing (Ads) APIs.
+  - name: snapchat-offline-conversions-api
+    description: Read and write access to the Snapchat Conversions APIs.
+  - name: snapchat-profile-api
+    description: Read access to the Snapchat Public Profile APIs.
+notes: >-
+  Multiple scopes are requested as a space-separated list in the `scope`
+  authorize parameter, e.g.
+  `scope=snapchat-marketing-api snapchat-offline-conversions-api`. The granted
+  access token reflects the authorizing user's own permissions.

@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: searched
+source: probed /.well-known/ on Snap hosts 2026-07-21
+hosts:
+  - host: https://developers.snap.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+  - host: https://adsapi.snapchat.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://accounts.snapchat.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://gcp.api.snapchat.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://camera-kit-api.snapar.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+notes: >-
+  No /.well-known/ discovery documents (security.txt, OIDC discovery, OAuth
+  authorization-server metadata, api-catalog, ai-plugin.json) were served by any
+  probed Snap host. Absence recorded as valid data. OAuth endpoints are
+  documented in the Marketing API auth reference rather than via RFC 8414
+  discovery metadata.

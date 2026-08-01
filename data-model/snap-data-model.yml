@@ -1,0 +1,67 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/overview
+api: Snapchat Marketing API
+summary: >-
+  The Marketing API entity model is a hierarchy: Organizations own Ad Accounts;
+  Ad Accounts own Campaigns, Media, Creatives, and Audience Segments; Campaigns
+  own Ad Squads; Ad Squads own Ads; Ads reference a Creative. All entity ids are
+  UUIDs.
+entities:
+  - name: Organization
+    id: uuid
+    relationships:
+      - has_many: AdAccount
+        via: organization_id
+  - name: AdAccount
+    id: uuid
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+      - has_many: Campaign
+        via: ad_account_id
+      - has_many: Media
+        via: ad_account_id
+      - has_many: Creative
+        via: ad_account_id
+      - has_many: Segment
+        via: ad_account_id
+  - name: Campaign
+    id: uuid
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+      - has_many: AdSquad
+        via: campaign_id
+  - name: AdSquad
+    id: uuid
+    relationships:
+      - belongs_to: Campaign
+        via: campaign_id
+      - has_many: Ad
+        via: ad_squad_id
+  - name: Ad
+    id: uuid
+    relationships:
+      - belongs_to: AdSquad
+        via: ad_squad_id
+      - has_one: Creative
+        via: creative_id
+  - name: Creative
+    id: uuid
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+      - has_one: Media
+        via: top_snap_media_id
+  - name: Media
+    id: uuid
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+  - name: Segment
+    id: uuid
+    note: Audience segment for targeting.
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id

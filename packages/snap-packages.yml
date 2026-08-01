@@ -1,0 +1,67 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/Snapchat
+packages:
+  - language: java
+    registry: github
+    name: business-sdk-java
+    url: https://github.com/Snapchat/business-sdk-java
+    install: "See repo (Gradle/Maven install from source; not on Maven Central)"
+    official: true
+    products: [Marketing API, Conversions API]
+  - language: python
+    registry: github
+    name: business-sdk-python
+    url: https://github.com/Snapchat/business-sdk-python
+    install: "See repo README"
+    official: true
+    products: [Marketing API, Conversions API]
+  - language: php
+    registry: github
+    name: business-sdk-php
+    url: https://github.com/Snapchat/business-sdk-php
+    install: "composer (see repo README)"
+    official: true
+    products: [Marketing API, Conversions API]
+  - language: javascript
+    registry: npm
+    name: "@snap/camera-kit"
+    url: https://www.npmjs.com/package/@snap/camera-kit
+    install: npm install @snap/camera-kit
+    official: true
+    products: [Camera Kit]
+  - language: kotlin
+    registry: github
+    name: camera-kit-android-sdk
+    url: https://github.com/Snapchat/camera-kit-android-sdk
+    install: "See repo (Android AAR)"
+    official: true
+    products: [Camera Kit]
+  - language: swift
+    registry: github
+    name: camera-kit-ios-sdk
+    url: https://github.com/Snapchat/camera-kit-ios-sdk
+    install: "See repo (Swift Package / CocoaPods)"
+    official: true
+    products: [Camera Kit]
+  - language: typescript
+    registry: github
+    name: react-camera-kit
+    url: https://github.com/Snapchat/react-camera-kit
+    install: "See repo README"
+    official: true
+    products: [Camera Kit]
+  - language: swift
+    registry: github
+    name: creative-kit
+    url: https://github.com/Snapchat/creative-kit
+    install: "CocoaPods (see repo README)"
+    official: true
+    products: [Snap Kit, Creative Kit]
+notes: >-
+  Snap does not publish its Business/Marketing SDKs to Maven Central, PyPI, or
+  Packagist under a com.snapchat coordinate (Maven Central search for
+  g:com.snapchat returned 0 results on 2026-07-21); they are distributed as
+  source from the github.com/Snapchat org. The Camera Kit web SDK is on npm as
+  @snap/camera-kit. Native Camera Kit SDKs (Android/iOS) ship as platform
+  packages from their repos.

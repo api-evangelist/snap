@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  developers.snap.com Marketing API authentication + api-patterns; Snap Kit
+  Login Kit OAuth2/OIDC docs
+api: Snapchat Marketing API / Snap Kit
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Marketing API uses OAuth 2.0 authorization code grant with refresh tokens
+      (authorize + access_token endpoints on accounts.snapchat.com), Bearer
+      access tokens, 3600s TTL.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      Snap Kit / Login Kit provides "Login with Snapchat" with OpenID Connect
+      support for identity and approved profile fields.
+  - id: rfc6902
+    conforms: true
+    evidence: >-
+      Single-entity PATCH uses JSON Patch (application/json-patch+json) with
+      add/remove/replace/test operations (error codes E1165/E1166).
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors use a custom request_status/sub_request_status envelope, not
+      application/problem+json.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Cursor pagination via paging.next_link and a limit parameter (50-1000),
+      ordered by CreatedAt.
+  - id: idempotency
+    conforms: false
+    evidence: No documented client-supplied idempotency key.
+  - id: rfc8594
+    conforms: false
+    evidence: >-
+      Deprecations are announced via the Announcements page/email rather than
+      Sunset/Deprecation HTTP headers (not observed).
+compliance:
+  published: false
+  note: >-
+    No developer-facing compliance/trust center (SOC 2 / ISO 27001 report portal)
+    was found for the Snap for Developers program as of 2026-07-21.

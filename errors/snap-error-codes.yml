@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+api: Snapchat Marketing API
+format: custom-envelope
+envelope:
+  request_status: "SUCCESS | ERROR"
+  request_id: "opaque request id"
+  sub_request_status: "per-entity SUCCESS | ERROR"
+  sub_request_error_reason: "Error code: <code>, message: <message> : [<context>]"
+auth_errors:
+  - status: 401
+    signal: 'WWW-Authenticate: Bearer error="invalid_token", error_description="The access token expired"'
+    remediation: Refresh the access token with the refresh_token grant and retry.
+error_codes:
+  - code: E1165
+    area: JSON Patch
+    title: Patch request does not follow the correct JSON Patch format.
+    contexts:
+      - "Unsupported patch operation: <op> (op is not add, remove, replace, or test)"
+      - "Patch must not modify the entity ID (operation targets /id)"
+      - "Array index paths are not supported: <path>"
+      - "Malformed document (no context)"
+    remediation: Send a well-formed RFC 6902 JSON Patch document; do not target /id or numeric array indices.
+  - code: E1166
+    area: JSON Patch
+    title: Patch request could not be applied to the object.
+    causes:
+      - "Target path does not exist on the entity's wire schema"
+      - "A test operation's expected value did not match"
+      - "An add operation targeted a child whose parent object is null"
+    remediation: Verify the target path exists and parent objects are present before adding children.
+  - code: E2023
+    area: Entity update
+    title: Resulting entity changed a field that is immutable once set.
+    contexts:
+      - "[<field> cannot be changed once set.] e.g. [attribution_method cannot be changed once set.]"
+    remediation: Do not attempt to modify immutable fields after initial creation.
+notes: >-
+  These are the documented JSON Patch / immutability error codes for the Ads
+  API. Individual endpoint references document additional validation failures
+  returned in sub_request_error_reason. Snap's envelope is not RFC 9457
+  problem+json; errors are surfaced in the request_status / sub_request_status
+  fields.

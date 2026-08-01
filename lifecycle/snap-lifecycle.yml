@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+api: Snapchat Marketing API
+versioning:
+  style: uri-path
+  current: v1
+  note: The Marketing API is served under /v1; the Conversions API uses versioned event endpoints.
+deprecation:
+  policy: >-
+    Snap communicates changes, new releases, and deprecations through the
+    Marketing API Announcements page and an email announcement list that
+    developers can subscribe to. Announcements give forward dates by which
+    changes take effect (e.g. eligibility-validation enforcement dates).
+  channel: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+  subscribe: true
+  examples:
+    - "March 2025: Optimization Goal / Conversion Window eligibility validation announced, enforced 23 September 2025."
+    - "October 2025: CHAT_FEED placement inclusion enforcement from 27 November 2025."
+status_page:
+  published: false
+  note: >-
+    No public developer status page was found (status.snap.com does not resolve;
+    developers.snap.com/status returns 404 as of 2026-07-21).
+sla:
+  published: false
+  note: No public SLA document was found for the Marketing API.

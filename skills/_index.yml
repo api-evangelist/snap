@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: generated
+source: >-
+  Grounded in documented Snapchat Marketing API operations
+  (developers.snap.com/api/marketing-api). No provider-published Agent Skills or
+  AGENTS.md were found as of 2026-07-21.
+api: Snapchat Marketing API
+skills:
+  - name: snap-launch-ad
+    file: snap-launch-ad.md
+    description: Launch a Snap Ad end-to-end (auth, media upload, creative, campaign, ad squad, ad).
+    operations:
+      - GET /v1/me/organizations
+      - POST /v1/adaccounts/{ad_account_id}/media
+      - POST /v1/media/{media_id}/upload
+      - POST /v1/adaccounts/{ad_account_id}/creatives
+      - POST /v1/adaccounts/{ad_account_id}/campaigns
+      - POST /v1/campaigns/{campaign_id}/adsquads
+      - POST /v1/adsquads/{ad_squad_id}/ads

@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+api: Snapchat Marketing API
+base_url: https://adsapi.snapchat.com/v1
+auth:
+  style: oauth2-bearer
+  header: "Authorization: Bearer {access_token}"
+  ref: authentication/snap-authentication.yml
+versioning:
+  style: uri-path
+  current: v1
+  example: https://adsapi.snapchat.com/v1/...
+pagination:
+  style: cursor
+  request_params:
+    limit: "integer, min 50, max 1000, entities per page"
+  response_fields:
+    next_link: paging.next_link
+    cursor_param: cursor
+  ordering: "Paginated calls are ordered by CreatedAt; non-paginated calls are unsorted."
+  sorting_param: "sort — return entities in created/last-updated order (usable with or without limit)."
+bulk:
+  read: "POST .../get_{entity}s_by_ids with {\"entity_ids\":[{\"id\":\"...\"}]}"
+  write: "Create/Update endpoints accept a JSON array of entities in one POST."
+  entity_request_limits:
+    Creative: 10
+    Media: 10
+    Organization: 15
+    "Ad Account": 15
+    Segments: 15
+    Campaign: 30
+    "Ad Squad": 30
+    Ad: 30
+patch:
+  media_type: application/json-patch+json
+  spec: RFC 6902 (JSON Patch)
+  scope: single-entity PATCH
+error_envelope:
+  request_status: "SUCCESS | ERROR (top-level request outcome)"
+  request_id: "opaque per-request id, echoed for support/tracing"
+  sub_request_status: "SUCCESS | ERROR per entity in a batch"
+  sub_request_error_reason: "Error code: <code>, message: <message> : [<context>]"
+  ref: errors/snap-error-codes.yml
+idempotency:
+  supported: false
+  note: >-
+    Snap does not document a client-supplied idempotency key for the Marketing
+    API. Mutations are batched arrays; retries are not deduplicated by the
+    provider. Callers should guard against duplicate creation client-side.
+request_tracing:
+  field: request_id
+  note: "Present on every response; include it when contacting Snap support."
