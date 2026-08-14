@@ -11,7 +11,11 @@ description: >-
   and Camera Kit for embedding Snap's augmented-reality Lenses into third-party
   apps and web experiences. The Marketing API is an OAuth 2.0 REST API served
   from adsapi.snapchat.com/v1 with cursor pagination and a structured request
-  envelope. First-party SDKs are published for Java, Python, PHP, JavaScript
+  envelope. Snap publishes first-party OpenAPI 3.0 for the Conversions API in
+  its own Business SDK repositories, ships a hosted read-only MCP server for
+  Snapchat Ads at mcp.snapchat.com/ads with pre-registered OAuth clients for
+  five agents, and delivers lead-generation leads by HMAC-signed webhook.
+  First-party SDKs are published for Java, Python, PHP, Ruby, Go, JavaScript
   (Camera Kit on npm), Android, and iOS. Snap was surfaced as a portfolio
   company of General Catalyst and enriched into the API Evangelist network.
 url: https://raw.githubusercontent.com/api-evangelist/snap/refs/heads/main/apis.yml
@@ -35,12 +39,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
-x-enrichment:
-  date: '2026-07-21'
-  status: enriched
-  artifacts_added: 16
-  pass: local-v1
+modified: '2026-08-13'
 image: https://developers.snap.com/img/snap-developer-logo.png
 tags:
 - Company
@@ -86,8 +85,77 @@ apis:
     url: errors/snap-error-codes.yml
   - type: DataModel
     url: data-model/snap-data-model.yml
+  - type: RateLimits
+    url: rate-limits/snap-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/snap-lead-gen-webhooks.yml
+  - type: Sandbox
+    url: sandbox/snap-sandbox.yml
+  - type: ChangeLog
+    url: changelog/snap-changelog.yml
+- name: Snap Conversions API
+  description: >-
+    Server-to-server conversion event ingestion for web, app, and offline
+    events, keyed by asset (Pixel ID for web/offline, Snap App ID for mobile
+    app). Served from tr.snapchat.com; v3 (/v3/{asset_id}/events) supersedes v2
+    (/v2/conversion). This is the one Snap surface with published OpenAPI 3.0.3
+    — Snap ships api/openapi.yaml inside its own Business SDK repositories on
+    github.com/Snapchat, and the Java, Python, PHP, Ruby, and Go SDKs are
+    generated from it. Authenticated with a static, non-expiring Conversions API
+    token passed as an access_token query parameter.
+  humanURL: https://developers.snap.com/marketing-api/Conversions-API/Introduction
+  baseURL: https://tr.snapchat.com
+  tags:
+  - Conversions
+  - Attribution
+  - Measurement
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/snap-conversions-api-v3-openapi.yml
+  - type: OpenAPI
+    url: openapi/snap-conversions-api-openapi.yml
+  - type: Overlay
+    url: overlays/snap-conversions-api-v3-overlay.yaml
+  - type: Overlay
+    url: overlays/snap-conversions-api-overlay.yaml
+  - type: Authentication
+    url: authentication/snap-authentication.yml
+  - type: Sandbox
+    url: sandbox/snap-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/snap-rate-limits.yml
+  - type: DataModel
+    url: data-model/snap-data-model.yml
+  - type: AgentSkill
+    url: skills/snap-send-conversion-events.md
+- name: Snapchat Ads MCP
+  description: >-
+    Snap's first-party hosted Model Context Protocol server, letting supported
+    agents read the caller's authorized Snapchat Ads data over streamable HTTP.
+    Read-only in this release; write access is documented as planned. OAuth 2.0
+    with PKCE against pre-registered client ids for Claude, Codex, ChatGPT,
+    Antigravity, and Gemini, scoped to snapads.read. Onboarding is self-service:
+    an organization admin approves each agent, then each member authorizes their
+    own access, and a member reaches only what their existing Snapchat Ads
+    permissions already allow.
+  humanURL: https://developers.snap.com/marketing-api/Ads-MCP/Introduction
+  baseURL: https://mcp.snapchat.com/ads
+  tags:
+  - MCP
+  - Agents
+  - Advertising
+  properties:
   - type: MCPServer
     url: mcp/snap-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/snap-tool-crosswalk.yml
+  - type: Authentication
+    url: authentication/snap-authentication.yml
+  - type: OAuthScopes
+    url: scopes/snap-scopes.yml
+  - type: WellKnown
+    url: well-known/snap-well-known.yml
 - name: Snap Kit / Login Kit
   description: >-
     OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat",
@@ -142,6 +210,28 @@ common:
   url: conformance/snap-conformance.yml
 - type: MCPServer
   url: mcp/snap-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/snap-tool-crosswalk.yml
+- type: OpenAPI
+  url: openapi/snap-conversions-api-v3-openapi.yml
+- type: OpenAPI
+  url: openapi/snap-conversions-api-openapi.yml
+- type: Overlay
+  url: overlays/snap-conversions-api-v3-overlay.yaml
+- type: Overlay
+  url: overlays/snap-conversions-api-overlay.yaml
+- type: Webhooks
+  url: asyncapi/snap-lead-gen-webhooks.yml
+- type: RateLimits
+  url: rate-limits/snap-rate-limits.yml
+- type: Plans
+  url: plans/snap-plans-pricing.yml
+- type: Sandbox
+  url: sandbox/snap-sandbox.yml
+- type: Components
+  url: components/snap-components.yml
+- type: TrustCenter
+  url: security/snap-trust-center.yml
 - type: LLMsTxt
   url: llms/snap-llms.txt
 - type: WellKnown
@@ -158,6 +248,8 @@ common:
   url: skills/_index.yml
 - type: GitHubOrganization
   url: https://github.com/Snapchat
+- type: Blog
+  url: https://eng.snap.com/
 - type: Support
   url: https://businesshelp.snapchat.com
 - type: SignUp
@@ -166,3 +258,8 @@ common:
   url: https://snap.com/terms
 - type: PrivacyPolicy
   url: https://snap.com/privacy/privacy-policy
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1
