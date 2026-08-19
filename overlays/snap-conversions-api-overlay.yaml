@@ -1,0 +1,78 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Snap Conversions API v2
+  version: 1.0.0
+extends: openapi/snap-conversions-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Derived from Snap's own published docs (developers.snap.com/marketing-api/Conversions-API)
+  and the enrichment artifacts in this repo. The harvested spec at
+  openapi/_original/ is never mutated.
+actions:
+  - target: $.info
+    update:
+      description: >-
+        Snap Conversions API v2 — server-to-server conversion event ingestion.
+        Superseded by the v3 endpoint (/v3/{asset_id}/events); Snap publishes a
+        v2-to-v3 migration guide. Harvested verbatim from the api/openapi.yaml
+        shipped in github.com/Snapchat/business-sdk-java, the spec Snap's own
+        Business SDKs are generated from.
+      contact:
+        name: Snap for Developers
+        url: https://developers.snap.com/marketing-api/Conversions-API/Introduction
+      x-apievangelist-provider: snap
+      x-apievangelist-artifacts:
+        authentication: authentication/snap-authentication.yml
+        conventions: conventions/snap-conventions.yml
+        errors: errors/snap-error-codes.yml
+        rate-limits: rate-limits/snap-rate-limits.yml
+        sandbox: sandbox/snap-sandbox.yml
+        data-model: data-model/snap-data-model.yml
+      x-lifecycle:
+        status: superseded
+        successor: openapi/snap-conversions-api-v3-openapi.yml
+        migration_guide: https://developers.snap.com/marketing-api/Conversions-API/MigrationGuide
+  - target: $.servers[?(@.url=='https://tr-shadow.snapchat.com/')]
+    update:
+      x-environment: staging
+      x-note: >-
+        Declared as "Staging server" in Snap's own spec but documented nowhere in
+        the prose docs — no onboarding, credential or retention semantics are
+        published for it.
+  - target: $.paths['/v2/conversion'].post
+    update:
+      summary: Send conversion events
+      tags: [Conversions]
+      x-rate-limit:
+        requests_per_second: 10
+        scope: per-access-token
+        batch_max_events: 2000
+        source: rate-limits/snap-rate-limits.yml
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        audit: required
+  - target: $.paths['/v2/conversion/validate'].post
+    update:
+      summary: Validate conversion events without processing them
+      tags: [Conversions, Validation]
+      x-sandbox: true
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        note: Validation only; events sent here are not processed as conversions.
+  - target: $.paths['/v2/conversion/validate/logs'].get
+    update:
+      summary: Read recent validation error logs
+      tags: [Validation]
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+  - target: $.paths['/v2/conversion/validate/stats'].get
+    update:
+      summary: Read validation statistics
+      tags: [Validation]
+      x-agentic-access:
+        action-class: connected
+        consequence: read

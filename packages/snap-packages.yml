@@ -1,67 +1,204 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://github.com/Snapchat
+registries_probed:
+  - {registry: npm, endpoint: registry.npmjs.org, answered: true}
+  - {registry: pypi, endpoint: pypi.org/pypi/<pkg>/json, answered: true}
+  - {registry: rubygems, endpoint: rubygems.org/api/v1/gems/<pkg>.json, answered: true}
+  - {registry: go, endpoint: proxy.golang.org, answered: true}
+  - {registry: maven-central, endpoint: search.maven.org, answered: true, result: "0 artifacts under g:com.snapchat*"}
+  - {registry: packagist, endpoint: packagist.org, answered: true, result: "snapchat/business-sdk not found"}
+
 packages:
+  # --- Conversions API / Business SDKs -------------------------------------
+  - language: python
+    registry: pypi
+    name: snap-business-sdk
+    url: https://pypi.org/project/snap-business-sdk/
+    install: pip install snap-business-sdk
+    official: true
+    publisher: "Snapchat Attribution Team <attribution-team@snapchat.com>"
+    version: 1.0.0
+    published: '2022-12-20'
+    repo: https://github.com/Snapchat/business-sdk-python
+    products: [Conversions API]
+
+  - language: ruby
+    registry: rubygems
+    name: snap_business
+    url: https://rubygems.org/gems/snap_business
+    install: gem install snap_business
+    official: true
+    publisher: Snap Inc.
+    version: 1.0.1
+    published: '2023-01-30'
+    repo: https://github.com/Snapchat/business-sdk-ruby
+    products: [Conversions API]
+
+  - language: go
+    registry: go
+    name: github.com/Snapchat/business-sdk-go
+    url: https://pkg.go.dev/github.com/Snapchat/business-sdk-go
+    install: go get github.com/Snapchat/business-sdk-go
+    official: true
+    version: v1.0.0
+    published: '2022-09-16'
+    repo: https://github.com/Snapchat/business-sdk-go
+    products: [Conversions API]
+    spec: openapi/snap-conversions-api-openapi.yml
+
+  - language: java
+    registry: github
+    name: business-sdk-v3-java
+    url: https://github.com/Snapchat/business-sdk-v3-java
+    install: "Gradle/Maven from source — not published to Maven Central"
+    official: true
+    version: null
+    published: '2025-05-22'
+    published_basis: "last push to the default branch (no registry release to read)"
+    repo: https://github.com/Snapchat/business-sdk-v3-java
+    products: [Conversions API V3]
+    spec: openapi/snap-conversions-api-v3-openapi.yml
+    note: >-
+      Ships Snap's own api/openapi.yaml for Conversions API V3 — the spec
+      harvested into openapi/ in this repo.
+
   - language: java
     registry: github
     name: business-sdk-java
     url: https://github.com/Snapchat/business-sdk-java
-    install: "See repo (Gradle/Maven install from source; not on Maven Central)"
+    install: "Gradle/Maven from source — not published to Maven Central"
     official: true
-    products: [Marketing API, Conversions API]
-  - language: python
-    registry: github
-    name: business-sdk-python
-    url: https://github.com/Snapchat/business-sdk-python
-    install: "See repo README"
-    official: true
-    products: [Marketing API, Conversions API]
+    version: null
+    published: '2023-11-15'
+    published_basis: "last push to the default branch (no registry release to read)"
+    repo: https://github.com/Snapchat/business-sdk-java
+    products: [Conversions API]
+    spec: openapi/snap-conversions-api-openapi.yml
+
   - language: php
     registry: github
     name: business-sdk-php
     url: https://github.com/Snapchat/business-sdk-php
-    install: "composer (see repo README)"
+    install: "composer from VCS — not on Packagist"
     official: true
-    products: [Marketing API, Conversions API]
+    version: null
+    published: '2023-05-01'
+    published_basis: "last push to the default branch (absent from Packagist)"
+    repo: https://github.com/Snapchat/business-sdk-php
+    products: [Conversions API]
+
+  # --- Camera Kit -----------------------------------------------------------
   - language: javascript
     registry: npm
     name: "@snap/camera-kit"
     url: https://www.npmjs.com/package/@snap/camera-kit
     install: npm install @snap/camera-kit
     official: true
+    version: 1.20.0
+    published: '2026-08-07'
     products: [Camera Kit]
-  - language: kotlin
-    registry: github
-    name: camera-kit-android-sdk
-    url: https://github.com/Snapchat/camera-kit-android-sdk
-    install: "See repo (Android AAR)"
+    note: The only Snap package under active release cadence.
+
+  - language: javascript
+    registry: npm
+    name: "@snap/camera-kit-react-native"
+    url: https://www.npmjs.com/package/@snap/camera-kit-react-native
+    install: npm install @snap/camera-kit-react-native
     official: true
+    version: 0.6.0
+    published: '2025-03-14'
+    repo: https://github.com/Snapchat/camera-kit-react-native
     products: [Camera Kit]
-  - language: swift
-    registry: github
-    name: camera-kit-ios-sdk
-    url: https://github.com/Snapchat/camera-kit-ios-sdk
-    install: "See repo (Swift Package / CocoaPods)"
-    official: true
-    products: [Camera Kit]
+
   - language: typescript
     registry: github
     name: react-camera-kit
     url: https://github.com/Snapchat/react-camera-kit
     install: "See repo README"
     official: true
+    version: null
+    published: '2026-08-05'
+    published_basis: "last push to the default branch"
     products: [Camera Kit]
+
+  - language: kotlin
+    registry: github
+    name: camera-kit-android-sdk
+    url: https://github.com/Snapchat/camera-kit-android-sdk
+    install: "Android AAR — see repo"
+    official: true
+    version: null
+    published: '2026-06-18'
+    published_basis: "last push to the default branch"
+    products: [Camera Kit]
+
+  - language: swift
+    registry: github
+    name: camera-kit-ios-sdk
+    url: https://github.com/Snapchat/camera-kit-ios-sdk
+    install: "Swift Package / CocoaPods — see repo"
+    official: true
+    version: null
+    published: '2026-06-18'
+    published_basis: "last push to the default branch"
+    products: [Camera Kit]
+
+  # --- Snap Kit -------------------------------------------------------------
+  - language: swift
+    registry: github
+    name: snap-kit-spm
+    url: https://github.com/Snapchat/snap-kit-spm
+    install: "Swift Package Manager"
+    official: true
+    version: null
+    published: '2025-08-07'
+    published_basis: "last push to the default branch"
+    products: [Snap Kit]
+
   - language: swift
     registry: github
     name: creative-kit
     url: https://github.com/Snapchat/creative-kit
-    install: "CocoaPods (see repo README)"
+    install: "CocoaPods — see repo README"
     official: true
+    version: null
+    published: '2024-04-19'
+    published_basis: "last push to the default branch"
     products: [Snap Kit, Creative Kit]
+
+  - language: typescript
+    registry: github
+    name: passport-snapchat
+    url: https://github.com/Snapchat/passport-snapchat
+    install: "See repo README"
+    official: true
+    version: null
+    published: '2023-12-04'
+    published_basis: "last push to the default branch"
+    products: [Login Kit]
+    note: PassportJS OAuth 2.0 strategy for Snapchat login.
+
+currency:
+  assessed: '2026-08-13'
+  finding: >-
+    Snap's SDK estate is bimodal. Camera Kit is current — @snap/camera-kit
+    published 1.20.0 on 2026-08-07, days before this assessment. Every
+    server-side Business SDK is stale at the registry: PyPI snap-business-sdk
+    1.0.0 (2022-12-20), RubyGems snap_business 1.0.1 (2023-01-30), Go module
+    v1.0.0 (2022-09-16). All three predate the Conversions API V3 endpoint they
+    would need to wrap — Snap's answer to V3 was a NEW repo
+    (business-sdk-v3-java, last pushed 2025-05-22) rather than a release of the
+    existing packages, so a developer installing the published Python, Ruby or Go
+    package today gets a v2-only client for an API Snap has moved past.
+  maven_central: >-
+    Snap publishes NOTHING to Maven Central. A search for g:com.snapchat*
+    returned 0 artifacts on 2026-08-13, unchanged from the 2026-07-21 pass, so
+    both Java SDKs must be built from source.
+  packagist: "snapchat/business-sdk is not registered; the PHP SDK is VCS-install only."
+
 notes: >-
-  Snap does not publish its Business/Marketing SDKs to Maven Central, PyPI, or
-  Packagist under a com.snapchat coordinate (Maven Central search for
-  g:com.snapchat returned 0 results on 2026-07-21); they are distributed as
-  source from the github.com/Snapchat org. The Camera Kit web SDK is on npm as
-  @snap/camera-kit. Native Camera Kit SDKs (Android/iOS) ship as platform
-  packages from their repos.
+  `version: null` on a GitHub-distributed package means the registry has no
+  release metadata to read, not that the check was skipped — `published` for
+  those entries is the last push to the repo's default branch, labelled with
+  `published_basis` so it is never mistaken for a release date.

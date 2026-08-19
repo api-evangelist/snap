@@ -1,0 +1,90 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Snap Conversions API V3
+  version: 1.0.0
+extends: openapi/snap-conversions-api-v3-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Derived from Snap's own published docs (developers.snap.com/marketing-api/Conversions-API)
+  and the enrichment artifacts in this repo. The harvested spec at
+  openapi/_original/ is never mutated.
+actions:
+  - target: $.info
+    update:
+      description: >-
+        Snap Conversions API V3 — server-to-server conversion event ingestion for
+        web, app and offline events, keyed by asset (Pixel ID for web/offline,
+        Snap App ID for app). Harvested verbatim from the api/openapi.yaml shipped
+        in github.com/Snapchat/business-sdk-v3-java.
+      contact:
+        name: Snap for Developers
+        url: https://developers.snap.com/marketing-api/Conversions-API/Introduction
+      x-apievangelist-provider: snap
+      x-apievangelist-artifacts:
+        authentication: authentication/snap-authentication.yml
+        conventions: conventions/snap-conventions.yml
+        rate-limits: rate-limits/snap-rate-limits.yml
+        sandbox: sandbox/snap-sandbox.yml
+        data-model: data-model/snap-data-model.yml
+  - target: $.info
+    update:
+      x-security-note: >-
+        This spec declares NO components.securitySchemes. Authentication is real
+        but is carried as an `access_token` QUERY parameter on every operation,
+        which puts a long-lived credential into URLs, proxy logs and browser
+        history. Snap's docs describe generating static long-lived Conversions API
+        tokens from Ads Manager -> Business Details that never expire. Modelled in
+        authentication/snap-authentication.yml.
+  - target: $.servers[?(@.url=='https://tr-shadow.snapchat.com/')]
+    update:
+      x-environment: staging
+  - target: $.paths['/v3/{asset_id}/events'].post
+    update:
+      summary: Send conversion events for an asset
+      tags: [Conversions]
+      x-asset-id: >-
+        Pixel ID for web and offline events; Snap App ID for mobile app events.
+      x-rate-limit:
+        requests_per_second: 10
+        long_lived_token_recommended_qps: 1000
+        batch_max_events: 2000
+        source: rate-limits/snap-rate-limits.yml
+      x-deduplication:
+        key: event_id
+        window: 48h
+        source: https://developers.snap.com/marketing-api/Conversions-API/Deduplication
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        audit: required
+  - target: $.paths['/v3/{asset_id}/events/validate'].post
+    update:
+      summary: Validate conversion events without processing them
+      tags: [Conversions, Validation]
+      x-sandbox: true
+      x-agentic-access:
+        action-class: acting
+        consequence: write
+        note: Validation only; events sent here are not processed as conversions.
+  - target: $.paths['/v3/{asset_id}/events/validate/logs'].get
+    update:
+      summary: Read recent validation error logs for an asset
+      tags: [Validation]
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+  - target: $.paths['/v3/{asset_id}/events/validate/stats'].get
+    update:
+      summary: Read validation statistics for an asset
+      tags: [Validation]
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+  - target: $.components.schemas.UserData
+    update:
+      x-pii: hashed
+      x-note: >-
+        Matching identifiers (em, ph) must be SHA-256 hashed before sending.
+        Contrast with the lead-generation webhook payload, which delivers the
+        same identifiers in plaintext — see asyncapi/snap-lead-gen-webhooks.yml.

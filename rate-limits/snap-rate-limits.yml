@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/rate-limits
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/rate-limits
+  - https://developers.snap.com/marketing-api/Conversions-API/GetStarted
+  - https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+api: Snap
+limit_count: 4
+
+rate_limits:
+  - api: Snapchat Marketing API (Ads API)
+    scope: per-app
+    limit: 20
+    unit: requests
+    window: 1s
+    basis: "overall average volume across the App"
+    source: https://developers.snap.com/api/marketing-api/Ads-API/rate-limits
+  - api: Snapchat Marketing API (Ads API)
+    scope: per-access-token
+    limit: 10
+    unit: requests
+    window: 1s
+    basis: "average per individual access token issued by the App"
+    source: https://developers.snap.com/api/marketing-api/Ads-API/rate-limits
+  - api: Snap Conversions API
+    scope: per-access-token
+    limit: 10
+    unit: requests
+    window: 1s
+    basis: "standard API rate limit applies to CAPI"
+    batch_max_events: 2000
+    derived_event_throughput: "up to 20,000 events/sec at 10 req/sec x 2,000 events per batch"
+    source: https://developers.snap.com/marketing-api/Conversions-API/GetStarted
+  - api: Snap Conversions API (static long-lived token)
+    scope: per-token
+    limit: 1000
+    unit: requests
+    window: 1s
+    basis: "recommended QPS ceiling for Long Lived Tokens generated on the Business Details page"
+    batch_max_events: 2000
+    source: https://developers.snap.com/marketing-api/Conversions-API/GetStarted
+
+exhaustion:
+  status_code: 429
+  reason_phrase: Too Many Requests
+  guidance: >-
+    Snap's documented remediation is to lower the rate at which the App sends
+    requests. No backoff schedule, jitter guidance or Retry-After value is
+    published.
+
+response_headers:
+  published: false
+  observed: []
+  note: >-
+    Snap documents NO rate-limit response headers. There is no X-RateLimit-*,
+    no RateLimit-* (RFC 9331 style) and no documented Retry-After on the 429.
+    A client therefore has no runtime signal for remaining budget or reset time
+    and can only detect exhaustion after the fact, from the 429 itself. This is
+    the single largest agent-readiness gap in Snap's runtime contract: the limit
+    is published as a number in prose but never surfaced on the wire.
+
+entity_request_limits:
+  note: >-
+    Separate from request-rate limiting, the Ads API caps how many entities may
+    be sent in one bulk create/update request.
+    See conventions/snap-conventions.yml -> bulk.entity_request_limits.
+  source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+
+other_limits:
+  - subject: Async report retention
+    limit: "Generated reports are available for download for 7 days."
+    source: https://developers.snap.com/api/marketing-api/Ads-API/changelog
+  - subject: Pagination page size
+    limit: "limit parameter, minimum 50, maximum 1000 entities per page."
+    source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+  - subject: Conversions API deduplication window
+    limit: "Event deduplication is done on event_id and timestamp within a 48 hour window."
+    source: https://developers.snap.com/marketing-api/Conversions-API/UsingTheAPI
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://developers.snap.com/api/marketing-api/Ads-API/rate-limits.md
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://developers.snap.com/marketing-api/Conversions-API/GetStarted.md
+    http_status: 200

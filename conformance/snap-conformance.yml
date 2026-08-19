@@ -1,21 +1,60 @@
-generated: '2026-07-21'
-method: derived
+generated: '2026-08-13'
+method: searched
 source: >-
-  developers.snap.com Marketing API authentication + api-patterns; Snap Kit
-  Login Kit OAuth2/OIDC docs
-api: Snapchat Marketing API / Snap Kit
+  developers.snap.com Marketing API authentication + api-patterns + rate-limits;
+  Ads MCP Introduction; Snap Kit Login Kit docs; the two first-party OpenAPI
+  documents harvested into openapi/
+api: Snap
 standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      Snap publishes OpenAPI 3.0.3 for the Conversions API in its own SDK repos
+      (github.com/Snapchat/business-sdk-java, business-sdk-go and
+      business-sdk-v3-java all ship api/openapi.yaml). Harvested to openapi/.
+      No OpenAPI is published for the Ads API, Snap Kit or Camera Kit.
   - id: oauth2
     conforms: true
     evidence: >-
-      Marketing API uses OAuth 2.0 authorization code grant with refresh tokens
-      (authorize + access_token endpoints on accounts.snapchat.com), Bearer
-      access tokens, 3600s TTL.
-  - id: oidc
+      Marketing API uses the OAuth 2.0 authorization code grant with refresh
+      tokens (authorize + access_token endpoints on accounts.snapchat.com),
+      Bearer access tokens, 3600s TTL.
+  - id: oauth2-pkce
     conforms: true
     evidence: >-
+      The Ads MCP authorization server advertises
+      code_challenge_methods_supported: ["S256"] at
+      /.well-known/oauth-authorization-server/ads.
+  - id: rfc8414
+    conforms: partial
+    evidence: >-
+      OAuth 2.0 Authorization Server Metadata is served for the MCP resource at
+      /.well-known/oauth-authorization-server/ads (200), but NOT at the unscoped
+      path and NOT at all on accounts.snapchat.com for the Marketing API.
+  - id: rfc9728
+    conforms: true
+    evidence: >-
+      OAuth 2.0 Protected Resource Metadata served at
+      https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads (200)
+      and advertised in the WWW-Authenticate challenge on a 401.
+  - id: rfc7591
+    conforms: false
+    evidence: >-
+      Dynamic client registration is explicitly unsupported; each agent uses a
+      client id Snap pre-registered.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Hosted streamable-HTTP MCP server at https://mcp.snapchat.com/ads,
+      read-only, OAuth-protected. Verified by a tools/list POST returning 401
+      with an RFC 9728 resource_metadata challenge.
+  - id: oidc
+    conforms: partial
+    evidence: >-
       Snap Kit / Login Kit provides "Login with Snapchat" with OpenID Connect
-      support for identity and approved profile fields.
+      support. No /.well-known/openid-configuration is served on any Snap host
+      (404 on accounts.snapchat.com, api.snapkit.com, adsapi.snapchat.com), and
+      the MCP authorization server explicitly does not support OpenID Connect.
   - id: rfc6902
     conforms: true
     evidence: >-
@@ -26,6 +65,13 @@ standards:
     evidence: >-
       Errors use a custom request_status/sub_request_status envelope, not
       application/problem+json.
+  - id: rfc6750
+    conforms: true
+    evidence: >-
+      Bearer token in the Authorization header with a WWW-Authenticate challenge
+      carrying error="invalid_token" on expiry. Note the Conversions API V3
+      deviates — it carries the credential as an access_token query parameter,
+      which RFC 6750 §2.3 discourages.
   - id: pagination
     conforms: true
     evidence: >-
@@ -33,14 +79,53 @@ standards:
       ordered by CreatedAt.
   - id: idempotency
     conforms: false
-    evidence: No documented client-supplied idempotency key.
+    evidence: >-
+      No client-supplied idempotency key on any Snap API. The Conversions API
+      offers event_id deduplication within a 48h window, which is
+      reporting-level dedup, not request idempotency — a retried POST is not
+      guaranteed to be a no-op.
+  - id: rate-limit-headers
+    conforms: false
+    evidence: >-
+      Limits are published as prose (20 req/s per app, 10 req/s per token) but
+      no X-RateLimit-*, RateLimit-* or Retry-After header is documented, and the
+      429 carries no reset signal.
   - id: rfc8594
     conforms: false
     evidence: >-
-      Deprecations are announced via the Announcements page/email rather than
-      Sunset/Deprecation HTTP headers (not observed).
+      Deprecations are announced via the Announcements page and an email list
+      rather than Sunset/Deprecation HTTP headers.
+  - id: webhooks
+    conforms: partial
+    evidence: >-
+      Lead-generation webhooks are real and HMAC-signed, but Snap publishes
+      neither the signature header name nor the digest algorithm, so signature
+      verification cannot be implemented from the public docs.
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document is published for any Snap event surface.
+  - id: fhir-r4
+    conforms: false
+  - id: scim
+    conforms: false
+
 compliance:
   published: false
+  trust_center: https://trust.snap.com/
   note: >-
-    No developer-facing compliance/trust center (SOC 2 / ISO 27001 report portal)
-    was found for the Snap for Developers program as of 2026-07-21.
+    Snap Inc. publishes a trust center (a SecurityPal "Snap Assurance Profile"),
+    but no certification — SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP — is
+    readable from it anonymously, and none is named anywhere in the Snap for
+    Developers docs. `published: false` records what could be verified, not a
+    claim that Snap holds no certifications. See security/snap-trust-center.yml.
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://mcp.snapchat.com/.well-known/oauth-authorization-server/ads
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://accounts.snapchat.com/.well-known/openid-configuration
+    http_status: 404
+  - fetched: '2026-08-13'
+    url: https://raw.githubusercontent.com/Snapchat/business-sdk-v3-java/main/api/openapi.yaml
+    http_status: 200

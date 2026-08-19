@@ -1,14 +1,18 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: generated
 source: >-
   Grounded in documented Snapchat Marketing API operations
-  (developers.snap.com/api/marketing-api). No provider-published Agent Skills or
-  AGENTS.md were found as of 2026-07-21.
-api: Snapchat Marketing API
+  (developers.snap.com/api/marketing-api) and in the operationIds of Snap's own
+  first-party OpenAPI harvested into openapi/. No provider-published Agent
+  Skills or AGENTS.md were found on developers.snap.com or in the
+  github.com/Snapchat org as of 2026-08-13.
+api: Snap
 skills:
   - name: snap-launch-ad
     file: snap-launch-ad.md
+    api: Snapchat Marketing API
     description: Launch a Snap Ad end-to-end (auth, media upload, creative, campaign, ad squad, ad).
+    grounding: documented-http-operations
     operations:
       - GET /v1/me/organizations
       - POST /v1/adaccounts/{ad_account_id}/media
@@ -17,3 +21,36 @@ skills:
       - POST /v1/adaccounts/{ad_account_id}/campaigns
       - POST /v1/campaigns/{campaign_id}/adsquads
       - POST /v1/adsquads/{ad_squad_id}/ads
+
+  - name: snap-send-conversion-events
+    file: snap-send-conversion-events.md
+    api: Snap Conversions API V3
+    description: >-
+      Send server-to-server conversion events — validate first, send the batch,
+      then read validation logs and stats to confirm acceptance.
+    grounding: openapi-operationids
+    spec: openapi/snap-conversions-api-v3-openapi.yml
+    operations:
+      - sendValidationEvent
+      - getValidationLogs
+      - getValidationStats
+      - sendEvent
+
+  - name: snap-receive-lead-webhooks
+    file: snap-receive-lead-webhooks.md
+    api: Snapchat Marketing API — Lead Generation
+    description: >-
+      Register a webhook against a lead-gen form, fire Snap's test lead to prove
+      delivery, and consume the plaintext-PII payload safely.
+    grounding: documented-http-operations
+    ref: asyncapi/snap-lead-gen-webhooks.yml
+    operations:
+      - POST /v1/lead_gen/integrations/public_webhook
+      - GET /v1/lead_gen/integrations/{integration_id}/test
+      - GET /v1/lead_gen/forms/{form_id}/integrations
+
+notes: >-
+  `grounding: openapi-operationids` means every operation named in the skill was
+  grepped out of a spec in openapi/. `grounding: documented-http-operations`
+  means Snap publishes no OpenAPI for that surface, so the skill cites Snap's
+  documented HTTP request lines verbatim instead of an invented operationId.

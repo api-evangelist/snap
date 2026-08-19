@@ -1,0 +1,63 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/introduction
+  - https://businesshelp.snapchat.com/s/article/api-faq
+  - https://ads.snapchat.com
+api: Snap
+plan_count: 0
+plans: []
+
+model:
+  type: no-api-plans
+  summary: >-
+    Snap publishes no developer plans, tiers, quotas or per-call price for any of
+    its APIs. Access to the Marketing API, Conversions API, Snap Kit / Login Kit
+    and Camera Kit is granted against a Snap Business Manager / developer account
+    rather than sold as a metered product, and there is no pricing page for the
+    developer program to record.
+  billed_instead: >-
+    Money changes hands on ad spend, not on API calls. Campaigns bought through
+    the Marketing API are priced by Snap's ad auction and invoiced through Snap
+    Business Manager against a Funding Source on the Ad Account
+    (credit card, PayPal, line of credit) — see the Funding Sources, Invoices,
+    Billing Centers and Transactions entities in the Ads API.
+  paywall: none
+  self_service: true
+
+access_gates:
+  - gate: Snap Business Manager account
+    required: true
+    note: Required to create an Organization, Ad Account and OAuth app.
+  - gate: OAuth app + client credentials
+    required: true
+    note: Created in Ads Manager -> Business Details -> OAuth Apps.
+  - gate: Organization allowlist
+    required: false
+    applies_to: Marketing Mix Modeling (MMM) API
+    note: >-
+      The MMM API is the one Snap API with an explicit org-level allowlist —
+      it is available only to orgs Snap has enabled for MMM API access.
+      See https://developers.snap.com/api/marketing-api/Ads-API/MMM-API/onboarding
+  - gate: Organization/Business Admin approval
+    required: true
+    applies_to: Snapchat Ads MCP
+    note: Self-service; no Snap allowlist, but an org admin must approve each agent.
+  - gate: App review
+    required: true
+    applies_to: Snap Kit and Camera Kit
+    note: Snap reviews integrations before public release.
+
+notes: >-
+  plan_count is 0 as a measured fact, not a gap in this pass: Snap genuinely
+  publishes no developer pricing tiers. Recorded explicitly so the absence is
+  distinguishable from "not checked".
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://ar.snap.com/camera-kit
+    http_status: 200

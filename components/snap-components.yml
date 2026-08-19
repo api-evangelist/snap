@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.snap.com/llms.txt
+docs:
+  - https://developers.snap.com/camera-kit/integrate-sdk/web/guides/camera-kit-web-for-beginners
+  - https://developers.snap.com/api/snapchat-for-web/social-plugins/introduction
+  - https://developers.snap.com/snap-kit/creative-kit/web
+  - https://developers.snap.com/api/marketing-api/Ads-API/snap-pixel
+api: Snap
+summary: >-
+  Snap ships a substantial client-side surface that is distinct from its
+  server-side SDKs: an AR camera library for the browser, a family of social web
+  embeds for Lenses/Spotlight/Stories/Profiles, a web share flow, and the Snap
+  Pixel tag. These are loaded into a page or app rather than called over HTTP.
+
+families:
+  - family: Camera Kit Web
+    kind: javascript-library
+    description: >-
+      Browser library that runs Snap's AR engine in a web page — camera session
+      management, lens rendering and lens scheduling against a canvas element.
+      Includes documented UI patterns for lens and camera selector controls.
+    loader:
+      registry: npm
+      package: "@snap/camera-kit"
+      install: npm install @snap/camera-kit
+      package_ref: packages/snap-packages.yml
+    surfaces:
+      - Lens and camera selector menus
+      - Live video output onto a canvas element
+      - Push-to-device / push-to-web Lens preview
+      - Amazon IVS live-streaming integration
+    docs: https://developers.snap.com/camera-kit/integrate-sdk/web/guides/camera-kit-web-for-beginners
+
+  - family: Camera Kit React bindings
+    kind: react-components
+    description: >-
+      Official React bindings over Camera Kit Web for building lens-powered AR
+      experiences as React components.
+    loader:
+      registry: github
+      package: Snapchat/react-camera-kit
+      package_ref: packages/snap-packages.yml
+    docs: https://github.com/Snapchat/react-camera-kit
+
+  - family: Snapchat for Web — Social Plugins
+    kind: web-embeds
+    description: >-
+      Embeddable Snapchat content units for articles and websites. Snap calls
+      these "Web Embeds".
+    surfaces:
+      - Lens embed
+      - Spotlight video embed
+      - Public Story embed
+      - Public Profile embed
+      - Share Sheet API (share a link from your site to Snapchat)
+    docs: https://developers.snap.com/api/snapchat-for-web/social-plugins/introduction
+
+  - family: Creative Kit Web
+    kind: web-integration
+    description: >-
+      Web integration that lets a site hand content off into Snapchat's camera
+      for sharing, without a native SDK.
+    docs: https://developers.snap.com/snap-kit/creative-kit/web
+
+  - family: Snap Pixel
+    kind: measurement-tag
+    description: >-
+      Client-side tag installed on an advertiser's website that correlates ad
+      views with on-site conversions. The browser-side counterpart to the
+      server-side Conversions API, and the pairing the deduplication guidance
+      (event_id / client_dedup_id) is written for.
+    distribution:
+      - {channel: direct script install, note: "Installed on the site; managed as a Pixel entity in the Ads API."}
+      - {channel: Google Tag Manager, template: Snapchat/snapchat-google-tag-manager, note: "Snap-published GTM community template."}
+      - {channel: GTM server-side, template: Snapchat/capi-google-tag-manager-serverside-tag, note: "Snap-published server-side GTM template for the Conversions API."}
+    docs: https://developers.snap.com/api/marketing-api/Ads-API/snap-pixel
+
+deprecated:
+  - family: Login Kit SDKs
+    status: deprecated
+    replacement: "Direct OAuth 2.0 integration"
+    note: >-
+      Snap previously shipped Login Kit SDKs that wrapped the OAuth2 service and
+      supplied a drop-in "Login with Snapchat" button. Those SDKs are being
+      deprecated; Snap's guidance is to implement OAuth2 directly. The underlying
+      OAuth2 service remains fully available.
+    docs: https://developers.snap.com/snap-kit/login-kit/overview
+    ref: lifecycle/snap-lifecycle.yml
+
+notes: >-
+  Distinct from packages/snap-packages.yml, which catalogues the server-side and
+  native client libraries. Only families Snap documents on its own developer site
+  are listed.

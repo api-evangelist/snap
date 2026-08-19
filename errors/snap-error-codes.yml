@@ -1,6 +1,10 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
+  - https://developers.snap.com/api/marketing-api/Ads-API/errors
+  - https://developers.snap.com/api/marketing-api/Ads-API/MMM-API/troubleshooting
 api: Snapchat Marketing API
 format: custom-envelope
 envelope:
@@ -42,3 +46,72 @@ notes: >-
   returned in sub_request_error_reason. Snap's envelope is not RFC 9457
   problem+json; errors are surfaced in the request_status / sub_request_status
   fields.
+
+http_status_reference:
+  source: https://developers.snap.com/api/marketing-api/Ads-API/errors
+  note: >-
+    Snap's published HTTP status table. It is written in the joke register of an
+    early Slate-style docs template ("Your request sucks", "The kitten requested
+    is hidden", "I'm a teapot") and gives no product-specific remediation, so it
+    is captured for completeness rather than as usable error semantics. The real
+    diagnostic detail lives in sub_request_error_reason.
+  statuses:
+    - {status: 400, meaning: Bad Request}
+    - {status: 401, meaning: Unauthorized — access token invalid or expired}
+    - {status: 403, meaning: Forbidden}
+    - {status: 404, meaning: Not Found}
+    - {status: 405, meaning: Method Not Allowed}
+    - {status: 406, meaning: Not Acceptable — a non-JSON format was requested}
+    - {status: 410, meaning: Gone}
+    - {status: 418, meaning: "I'm a teapot"}
+    - {status: 429, meaning: Too Many Requests — rate limit exceeded, ref rate-limits/snap-rate-limits.yml}
+    - {status: 500, meaning: Internal Server Error}
+    - {status: 503, meaning: Service Unavailable — maintenance}
+
+mmm_api_errors:
+  source: https://developers.snap.com/api/marketing-api/Ads-API/MMM-API/troubleshooting
+  note: >-
+    The MMM API is the one Snap surface with genuinely actionable, product-specific
+    error guidance, including an explicit ambiguity warning.
+  statuses:
+    - status: 400
+      cause: "Required field missing, unsupported parameter, or start_date before 2023-01-01."
+    - status: 401
+      cause: Token invalid or expired.
+      remediation: "Refresh with refresh_token and confirm requests go to adsapi.snapchat.com."
+    - status: 403
+      cause: >-
+        Org lacks access to the requested ad_account_id — the advertiser has not
+        shared the account at View tier, or no org member holds the Data
+        Analyst/reports role on it.
+    - status: 404
+      cause: >-
+        AMBIGUOUS: either the report_run_id is unknown, or the org is not on the
+        MMM allowlist. Snap states there is no way to distinguish the two from
+        the response alone.
+      remediation: "Verify the run id first, then confirm allowlist status with Snap."
+
+conversions_api_errors:
+  source: openapi/snap-conversions-api-v3-openapi.yml
+  method: derived
+  note: >-
+    The Conversions API specs declare only a "200" and a "default" response per
+    operation, both returning the same envelope schema — there are no enumerated
+    4xx/5xx responses to derive problem types from. Failures surface inside the
+    200 body.
+  envelopes:
+    - version: v3
+      schema: EventResponse
+      failure_detail: ErrorDetails
+    - version: v2
+      schema: response
+      failure_detail: response_error_records
+  example_success:
+    status: VALID
+    reason: "Events have been processed successfully."
+
+format_note: >-
+  Snap's envelope is not RFC 9457 problem+json. Errors are surfaced in
+  request_status / sub_request_status and, for the Conversions API, inside a 200
+  response body — so a client cannot rely on the HTTP status alone to detect
+  failure.

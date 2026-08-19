@@ -1,28 +1,99 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+source: https://developers.snap.com/api/marketing-api/Ads-API/changelog
+docs:
+  change_log: https://developers.snap.com/api/marketing-api/Ads-API/changelog
+  breaking_changes_log: https://developers.snap.com/api/marketing-api/Ads-API/breaking-changes-log
+  announcements: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+  newsletter: https://developers.snap.com/api/marketing-api/Ads-API/newsletter
+  snap_kit_changelog: https://developers.snap.com/snap-kit/changelog
+  camera_kit_changelog: https://developers.snap.com/camera-kit/getting-started/changelog
 api: Snapchat Marketing API
-scheme: dated-announcements
+scheme: dated-changelog
 current_version: v1
-subscribe: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+subscribe: https://developers.snap.com/api/marketing-api/Ads-API/newsletter
+window: "2025-12 through 2026-07 (recent window only; the live log is the source of truth)"
+
 entries:
-  - date: '2026-04'
+  - date: '2026-07-20'
     highlights:
-      - "FEED placement added to placements bundlable with CHAT_FEED for lower-funnel optimization goals (Pixel, App events), effective 6 May 2026."
+      - "Public Profile API: new section on Audience sharing across Organizations."
     breaking: false
-  - date: '2025-10'
+  - date: '2026-07-09'
     highlights:
-      - "Snap begins enforcing inclusion of the CHAT_FEED placement when Ad Squads specify individual placements via custom configuration, from 27 November 2025."
-    breaking: true
-  - date: '2025-06'
+      - "Measurement / Insights: report_dimension for DMA and REGION are no longer US-only."
+      - "Dynamic Product Ads: instructions for creating a Product Set from 1,000 individual ID values."
+    breaking: false
+  - date: '2026-07-01'
     highlights:
-      - "Optimization Goal and Conversion Window eligibility/targeting spec changes given a release date of 23 September 2025."
-    breaking: true
-  - date: '2025-03'
+      - "Roles: two new roles added — agency_admin and agency_member."
+    breaking: false
+  - date: '2026-06-22'
     highlights:
-      - "Introduced Optimization Goal and Conversion Window eligibility changes; validation at point of creation will reject ineligible optimization goals / conversion windows. Recommends implementing the eligibility endpoint check."
+      - "Sponsored Snaps: DEEP_LINK ads can now be used with the CHAT_FEED placement."
+      - "Sponsored Snaps: Housing, Credit and Employment (HCE) campaigns/ad squads can now use CHAT_FEED."
+      - "Commercials: REMINDER and APP_INSTALL creatives can now be used as Commercials."
+      - "Async reporting: generated reports are downloadable for 7 days."
+    breaking: false
+  - date: '2026-05-27'
+    highlights:
+      - "API Patterns: PATCH error codes expanded with sub-cause context strings, E2023 for immutable-field violations, and an example error response."
+    breaking: false
+    ref: errors/snap-error-codes.yml
+  - date: '2026-05-26'
+    highlights:
+      - "New PATCH request entry in the API Patterns section."
+      - "Campaign, Ad Squad, Ad and Creative sections updated with PATCH support and editable attributes."
+    breaking: false
+  - date: '2026-05-21'
+    highlights:
+      - "Media: specifications for long-form video and chunking."
+    breaking: false
+  - date: '2026-04-27'
+    highlights:
+      - "Targeting: Smart Targeting renamed to Smart Audience."
+      - "Smart Budgets: campaign_budget_optimization_properties added to Campaign and Ad Squad."
+    breaking: false
+  - date: '2026-04-09'
+    highlights:
+      - "Sponsored Snaps: upcoming FEED placement changes (effective 6 May 2026)."
+      - "Dynamic Ads: item deletion now allowed via the UPSERT update_type on feed uploads."
     breaking: true
+  - date: '2026-03-30'
+    highlights:
+      - "Campaign: SKAd opt-in example via app_optimization_type at Campaign level."
+      - "Smart Budgets: lifetime and daily budget both allowed, ad types can be mixed, new auto_bid_max_bid_micro attribute."
+      - "Creative: App End Cards for App Install creatives."
+      - "Media: media_usages extended with APP_END_CARD."
+      - "Delivery Status: new status NOT_DELIVERING_AD_CONTAINS_INVALID_AUDIENCE."
+    breaking: false
+  - date: '2026-01-11'
+    highlights:
+      - "Creative Elements updated; new Interaction Zones page."
+    breaking: false
+  - date: '2025-12-12'
+    highlights:
+      - "Targeting: LEAD_FORM_SUBMISSIONS optimization goal can now be used with Smart Audience."
+    breaking: false
+  - date: '2025-12-08'
+    highlights:
+      - "Campaign: Mobile App Properties added — enforces an app install configuration for all underlying Ad Squads."
+    breaking: false
+
+other_surfaces:
+  - surface: Snapchat Ads MCP
+    note: >-
+      Shipped as a new product surface (hosted MCP server at
+      https://mcp.snapchat.com/ads, read-only, self-service onboarding). Not
+      dated in the Ads API change log; captured in mcp/snap-mcp.yml.
+  - surface: Marketing Mix Modeling (MMM) API
+    note: >-
+      Read-only asynchronous reporting API for MMM measurement vendors, added as
+      a documented product under Ads-API/MMM-API. Org-level allowlist required.
+
 notes: >-
-  Snap publishes Marketing API changes on the Announcements page with forward
-  effective dates and an email subscription. Only the recent window is captured
-  here.
+  Snap runs three separate change surfaces for the Marketing API — a dated
+  Change Log (documentation-level, most entries), a Breaking Changes Log
+  (behavioural, sparse, oldest entry April 2020), and an Announcements page with
+  forward effective dates — plus independent changelogs for Snap Kit and Camera
+  Kit. Only the recent window is captured.

@@ -1,4 +1,4 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/api-patterns
 api: Snapchat Marketing API
@@ -51,3 +51,56 @@ idempotency:
 request_tracing:
   field: request_id
   note: "Present on every response; include it when contacting Snap support."
+rate_limiting:
+  published_limits: true
+  response_headers: false
+  status_code: 429
+  ref: rate-limits/snap-rate-limits.yml
+  note: >-
+    Limits are documented as prose numbers (20 req/s per app, 10 req/s per
+    access token) but Snap emits NO rate-limit response headers — no
+    X-RateLimit-*, no RateLimit-*, no Retry-After on the 429. A caller cannot
+    observe remaining budget or reset time at runtime and can only react after
+    exhaustion.
+webhooks:
+  surface: Lead generation
+  signing: hmac
+  secret_delivery: "hmacSecret returned in the create-integration response"
+  signature_header: undocumented
+  algorithm: undocumented
+  ref: asyncapi/snap-lead-gen-webhooks.yml
+  note: >-
+    Snap states the HMAC secret is used to verify authenticity but publishes
+    neither the header name nor the digest algorithm, so verification is not
+    implementable from the public docs.
+conversions_api:
+  base_url: https://tr.snapchat.com
+  current_version: v3
+  path_shape: "/v3/{asset_id}/events  (asset_id = Pixel ID for web/offline, Snap App ID for app)"
+  auth: "access_token query parameter (static long-lived token)"
+  batch:
+    envelope_field: data
+    max_events_per_request: 2000
+  deduplication:
+    key: event_id
+    window: 48h
+    note: "Dedup against Pixel/MMP events; reporting-level dedup, NOT request idempotency."
+  pii:
+    hashing: "SHA-256 required on matching identifiers (em, ph)"
+  validation:
+    endpoint: "/v3/{asset_id}/events/validate"
+    ref: sandbox/snap-sandbox.yml
+  ref: openapi/snap-conversions-api-v3-openapi.yml
+monetary_values:
+  unit: micro-currency
+  rule: "1.00 in the Ad Account's currency equals 1,000,000 micro units."
+  currencies: [USD, CAD, GBP, EUR, AUD]
+  source: https://developers.snap.com/api/marketing-api/Ads-API/monetary-values
+identifiers:
+  format: uuid
+  note: All Marketing API entity ids are UUIDs.
+agent_surface:
+  mcp: https://mcp.snapchat.com/ads
+  access: read-only
+  scope: snapads.read
+  ref: mcp/snap-mcp.yml

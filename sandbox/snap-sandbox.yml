@@ -1,0 +1,115 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.snap.com/marketing-api/Conversions-API/UsingTheAPI
+docs:
+  - https://developers.snap.com/marketing-api/Conversions-API/UsingTheAPI
+  - https://developers.snap.com/api/marketing-api/Ads-API/faq
+  - https://developers.snap.com/api/marketing-api/Ads-API/lead-generation-ads
+api: Snap
+summary: >-
+  Snap ships no separate sandbox account, no test-mode key prefix and no
+  test/live key separation. What it does publish is a set of per-surface
+  validation and dummy-data affordances that let an integration be exercised
+  end-to-end against production credentials without creating real records or
+  billing real spend.
+
+test_live_separation:
+  present: false
+  key_prefixes: []
+  note: >-
+    There are no test-vs-live credentials. The same OAuth access token (or
+    static long-lived Conversions API token) is used everywhere; safety comes
+    from choosing a validation endpoint or a test flag, not from a test key.
+
+surfaces:
+  - surface: Conversions API validation endpoints
+    kind: validate-only endpoint
+    api: Snap Conversions API
+    endpoints:
+      - "POST https://tr.snapchat.com/v3/{pixel_id}/events/validate"
+      - "POST https://tr.snapchat.com/v3/{snap_app_id}/events/validate"
+      - "POST https://tr.snapchat.com/v2/conversion/validate"
+    operations:
+      - sendValidationEvent      # openapi/snap-conversions-api-v3-openapi.yml
+      - sendTestData             # openapi/snap-conversions-api-openapi.yml
+    behaviour: >-
+      Validates that a conversion event is constructed properly. Events sent to
+      the validate path are not processed as conversions.
+    inspection:
+      - "GET /v3/{asset_id}/events/validate/logs  (getValidationLogs) — recent validation errors"
+      - "GET /v3/{asset_id}/events/validate/stats (getValidationStats) — validation counts"
+      - "GET /v2/conversion/validate/logs  (conversionValidateLogs)"
+      - "GET /v2/conversion/validate/stats (conversionValidateStats)"
+    source: https://developers.snap.com/marketing-api/Conversions-API/UsingTheAPI
+
+  - surface: Conversions API staging server
+    kind: staging host
+    host: https://tr-shadow.snapchat.com/
+    declared_in:
+      - openapi/snap-conversions-api-openapi.yml
+      - openapi/snap-conversions-api-v3-openapi.yml
+    declared_as: "Staging server"
+    note: >-
+      Published in the servers[] block of Snap's own first-party OpenAPI
+      documents (the ones the Business SDKs are generated from). It is not
+      described anywhere in the prose docs, so no onboarding, credential or
+      data-retention semantics are documented for it.
+
+  - surface: Reporting API dummy data
+    kind: query flag
+    api: Snapchat Marketing API
+    flag: "test=true"
+    usage: "Add test=true to any reporting API request to get dummy data back."
+    behaviour: >-
+      Returns dummy measurement data so a reporting integration can be built
+      before real campaign data exists.
+    source: https://developers.snap.com/api/marketing-api/Ads-API/faq
+
+  - surface: Lead generation webhook test event
+    kind: trigger endpoint
+    api: Snapchat Marketing API
+    endpoint: "GET https://adsapi.snapchat.com/v1/lead_gen/integrations/{integration_id}/test"
+    behaviour: >-
+      Fires a fixed sample lead payload at the webhook URL registered for that
+      integration, as an end-to-end delivery test. The same dummy form data is
+      sent regardless of the real form's fields.
+    fixture:
+      form_name: "Snap Lead Generation Form"
+      campaign_name: "Snap Test Campaign Name"
+      ad_name: "Snap Test Ad"
+      ad_squad_name: "Snap Test Ad Squad Name"
+      first_name: "Sample Lead First Name"
+      last_name: "Sample Lead Last Name"
+      email: "johndoe@snapchat.com"
+      phone_number: "555-123-4567"
+      note: Published verbatim by Snap as the dummy payload; not invented here.
+    source: https://developers.snap.com/api/marketing-api/Ads-API/lead-generation-ads
+
+  - surface: In-app Lens testing (Camera Kit)
+    kind: device preview
+    api: Camera Kit
+    behaviour: >-
+      "Preview Your Lenses on Device" / "Push to Device" lets a Lens be pushed
+      to a Camera Kit app or the web SDK before it is published to a Lens group.
+    source: https://developers.snap.com/camera-kit/integrate-sdk/web/guides/push-2-web
+
+  - surface: Ad entity PAUSED status
+    kind: safe-create convention
+    api: Snapchat Marketing API
+    behaviour: >-
+      Campaigns, Ad Squads and Ads are created with an explicit status; creating
+      them PAUSED is the documented way to build a structure through the API
+      without serving impressions or incurring spend.
+    source: https://developers.snap.com/api/marketing-api/Ads-API/quick-start
+
+test_clocks:
+  present: false
+test_cards:
+  present: false
+  note: Not applicable — Snap is not a payments provider; ad spend is invoiced through Business Manager.
+
+notes: >-
+  Every value above is published by Snap verbatim. No test identifiers, tokens
+  or fixtures were invented. Snap's own curl examples use the placeholder bearer
+  token "meowmeowmeow", which is documentation filler rather than a usable
+  credential and is not recorded here as a test value.

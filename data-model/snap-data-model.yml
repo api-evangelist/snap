@@ -1,4 +1,4 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/overview
 api: Snapchat Marketing API
@@ -65,3 +65,121 @@ entities:
     relationships:
       - belongs_to: AdAccount
         via: ad_account_id
+  - name: Pixel
+    id: uuid
+    note: >-
+      Snap Pixel — the web measurement asset. Its id is the asset_id used as the
+      path segment on Conversions API v3 web and offline events.
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+      - has_many: CapiEvent
+        via: asset_id
+  - name: SnapAppId
+    id: uuid
+    note: >-
+      Verifies advertiser ownership of an app and maps to iOS and/or Android.
+      Used as the asset_id on Conversions API v3 mobile app events.
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+      - has_many: CapiEvent
+        via: asset_id
+  - name: LeadGenForm
+    id: uuid
+    note: Lead generation form attached to a lead-gen ad.
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+      - has_many: Lead
+        via: form_id
+      - has_one: WebhookIntegration
+        via: form_id
+        note: Only one webhook integration may exist per form.
+  - name: WebhookIntegration
+    id: uuid
+    id_field: integrationId
+    note: Outbound lead delivery registration; carries an hmacSecret.
+    relationships:
+      - belongs_to: LeadGenForm
+        via: form_id
+      - belongs_to: AdAccount
+        via: ad_account_id
+    ref: asyncapi/snap-lead-gen-webhooks.yml
+  - name: Lead
+    id: uuid
+    id_field: lead_id
+    note: >-
+      A submitted lead. Delivered by webhook with plaintext PII; see the payload
+      catalog in asyncapi/snap-lead-gen-webhooks.yml.
+    relationships:
+      - belongs_to: LeadGenForm
+        via: form_id
+      - belongs_to: Ad
+        via: ad_id
+  - name: FundingSource
+    id: uuid
+    note: Financial instrument responsible for ad spend (credit card, PayPal, line of credit).
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+  - name: BillingCenter
+    id: uuid
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+  - name: Invoice
+    id: uuid
+    note: Created only by Snap; allocated per Ad Account.
+    relationships:
+      - belongs_to: AdAccount
+        via: ad_account_id
+  - name: Member
+    id: uuid
+    note: A Snapchat account user who is a member of an Organization, with a Role at org and ad-account level.
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+
+conversions_api:
+  source: openapi/snap-conversions-api-v3-openapi.yml
+  method: derived
+  note: >-
+    Derived from the $ref graph of Snap's own Conversions API V3 OpenAPI. This
+    is an event-ingestion model, not a persisted entity model — the objects
+    below are request payload shapes.
+  schemas:
+    - name: CapiEvent
+      root: true
+      relationships:
+        - has_one: UserData
+          via: user_data
+        - has_one: CustomData
+          via: custom_data
+        - has_one: AppData
+          via: app_data
+    - name: CustomData
+      relationships:
+        - has_many: Content
+          via: contents
+    - name: UserData
+      note: "Matching identifiers (em, ph) must be SHA-256 hashed."
+    - name: AppData
+      note: "Carries extinfo and advertiser_tracking_enabled (ATT status)."
+    - name: EventResponse
+      relationships:
+        - has_many: ErrorDetails
+          via: errors
+    - name: ValidateEvent
+    - name: EventMetadata
+    - name: GetLogsResponse
+      relationships:
+        - has_many: EventLogs
+          via: logs
+    - name: GetStatsResponse
+      relationships:
+        - has_many: StatsData
+          via: data
+  keying:
+    asset_id: "Pixel ID (web/offline) or Snap App ID (mobile app) — the path key on every v3 operation."
+    event_id: "Deduplication key against Pixel/MMP events within a 48h window."

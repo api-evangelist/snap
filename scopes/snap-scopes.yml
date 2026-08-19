@@ -1,8 +1,24 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/authentication
-docs: https://developers.snap.com/api/marketing-api/Ads-API/authentication
-api: Snapchat Marketing API
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/authentication
+  - https://developers.snap.com/marketing-api/Ads-MCP/Introduction
+api: Snap
+schemes:
+  - name: Marketing API OAuth
+    flow: authorizationCode
+    authorization_endpoint: https://accounts.snapchat.com/login/oauth2/authorize
+    token_endpoint: https://accounts.snapchat.com/login/oauth2/access_token
+    delimiter: space
+  - name: Snapchat Ads MCP OAuth
+    flow: authorizationCode
+    issuer: https://mcp.snapchat.com/ads
+    authorization_endpoint: https://mcp.snapchat.com/authorize
+    token_endpoint: https://mcp.snapchat.com/token
+    pkce: S256
+    metadata: well-known/snap-oauth-authorization-server.json
+# legacy single-scheme fields retained for consumers that read them
 flow: authorizationCode
 authorization_endpoint: https://accounts.snapchat.com/login/oauth2/authorize
 token_endpoint: https://accounts.snapchat.com/login/oauth2/access_token
@@ -10,10 +26,20 @@ delimiter: space
 scopes:
   - name: snapchat-marketing-api
     description: Read and write access to the Snapchat Marketing (Ads) APIs.
+    scheme: Marketing API OAuth
   - name: snapchat-offline-conversions-api
     description: Read and write access to the Snapchat Conversions APIs.
+    scheme: Marketing API OAuth
   - name: snapchat-profile-api
     description: Read access to the Snapchat Public Profile APIs.
+    scheme: Marketing API OAuth
+  - name: snapads.read
+    description: >-
+      Read-only access to the caller's authorized Snapchat Ads data through the
+      hosted Ads MCP server. The only scope that server accepts — Snap's docs
+      warn that a client requesting its default scope set will be rejected.
+    scheme: Snapchat Ads MCP OAuth
+    added: '2026-08-13'
 notes: >-
   Multiple scopes are requested as a space-separated list in the `scope`
   authorize parameter, e.g.

@@ -1,27 +1,131 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/announcements
-api: Snapchat Marketing API
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/announcements
+  - https://developers.snap.com/api/marketing-api/Ads-API/changelog
+  - https://developers.snap.com/api/marketing-api/Ads-API/breaking-changes-log
+  - https://developers.snap.com/api/lens-api-deprecation
+  - https://developers.snap.com/camera-kit/getting-started/lts
+api: Snap
+
 versioning:
-  style: uri-path
-  current: v1
-  note: The Marketing API is served under /v1; the Conversions API uses versioned event endpoints.
+  - api: Snapchat Marketing API (Ads API)
+    style: uri-path
+    current: v1
+    base: https://adsapi.snapchat.com/v1
+    note: >-
+      Snap's own version page reads "The API is versioned (you're welcome). The
+      current version is v1." There has been one version since launch.
+  - api: Snap Conversions API
+    style: uri-path
+    current: v3
+    superseded: v2
+    base: https://tr.snapchat.com
+    migration_guide: https://developers.snap.com/marketing-api/Conversions-API/MigrationGuide
+    note: >-
+      v2 (/v2/conversion) is superseded by v3 (/v3/{asset_id}/events). Both
+      specs are held in openapi/. Snap shipped V3 as a NEW SDK repo rather than
+      a release of the existing SDKs — see packages/snap-packages.yml.
+  - api: Camera Kit
+    style: semver-sdk
+    lts: true
+    lts_policy: >-
+      Long Term Support SDK versions carry a commitment to fixes for 1 year
+      after initial release, including critical bug fixes and security patches.
+    docs: https://developers.snap.com/camera-kit/getting-started/lts
+
 deprecation:
   policy: >-
-    Snap communicates changes, new releases, and deprecations through the
-    Marketing API Announcements page and an email announcement list that
-    developers can subscribe to. Announcements give forward dates by which
-    changes take effect (e.g. eligibility-validation enforcement dates).
-  channel: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+    Snap communicates changes, new releases and deprecations through the
+    Marketing API Announcements page, a dated Change Log, a separate Breaking
+    Changes Log, and an email announcement list developers can subscribe to.
+    Announcements give forward dates by which changes take effect.
+  channels:
+    announcements: https://developers.snap.com/api/marketing-api/Ads-API/announcements
+    change_log: https://developers.snap.com/api/marketing-api/Ads-API/changelog
+    breaking_changes_log: https://developers.snap.com/api/marketing-api/Ads-API/breaking-changes-log
+    newsletter: https://developers.snap.com/api/marketing-api/Ads-API/newsletter
+    lens_api_deprecation: https://developers.snap.com/api/lens-api-deprecation
   subscribe: true
+  sunset_header: false
+  rfc8594: false
+  sunset_note: >-
+    No Sunset or Deprecation HTTP header is documented or observed. Deprecation
+    is a publishing practice at Snap, not a runtime signal — a client learns
+    nothing about an endpoint's lifecycle from the response.
+  active_deprecations:
+    - subject: Login Kit SDKs
+      status: deprecated
+      replacement: Direct OAuth 2.0 integration
+      note: >-
+        The SDKs that wrapped the OAuth2 service are being deprecated; the
+        underlying OAuth2 service remains fully available.
+      source: https://developers.snap.com/snap-kit/login-kit/overview
+    - subject: Conversions API v2
+      status: superseded
+      replacement: Conversions API V3
+      source: https://developers.snap.com/marketing-api/Conversions-API/MigrationGuide
+    - subject: Lens Studio APIs
+      status: deprecated-with-timeline
+      note: >-
+        Snap maintains a dedicated Lens API Deprecation guide listing deprecated
+        Lens Studio APIs, their modern replacements, and the timeline for when
+        each deprecated API will be blocked. This is Snap's most rigorous
+        deprecation surface and it is on the Lens Studio side, not the API side.
+      source: https://developers.snap.com/api/lens-api-deprecation
   examples:
     - "March 2025: Optimization Goal / Conversion Window eligibility validation announced, enforced 23 September 2025."
     - "October 2025: CHAT_FEED placement inclusion enforcement from 27 November 2025."
+    - "April 2026: FEED placement bundlable with CHAT_FEED for lower-funnel optimization goals, effective 6 May 2026."
+
 status_page:
   published: false
+  url: null
+  checked: '2026-08-13'
   note: >-
-    No public developer status page was found (status.snap.com does not resolve;
-    developers.snap.com/status returns 404 as of 2026-07-21).
+    Snap publishes no status page for any developer surface. status.snap.com and
+    status.snapchat.com do not resolve (connection failure), and
+    developers.snap.com/status returns 404.
+  false_positive:
+    url: https://snapchat.statuspage.io
+    http_status: 200
+    verdict: not-a-status-page
+    finding: >-
+      snapchat.statuspage.io answers 200 but is an UNCONFIGURED Statuspage
+      template. Its API summary lists exactly two components literally named
+      "API (example)" and "Management Portal (example)", both created
+      2021-12-20, never updated, with zero incidents ever recorded. It is a
+      reserved shell, not an operational status page, and must not be credited
+      as one — the 200 is the trap.
+    evidence_url: https://snapchat.statuspage.io/api/v2/summary.json
+
 sla:
   published: false
-  note: No public SLA document was found for the Marketing API.
+  note: No public SLA or uptime commitment was found for any Snap API.
+
+data_retention:
+  - subject: Async report downloads
+    retention: 7 days
+    source: https://developers.snap.com/api/marketing-api/Ads-API/changelog
+  - subject: MCP data
+    retention: >-
+      Governed by the Snap Developer Terms / Business Services Terms, which set
+      limits on how long data returned through Snap APIs may be retained and
+      when it must be deleted. Compliance is the integrator's responsibility.
+    source: https://developers.snap.com/marketing-api/Ads-MCP/Introduction
+
+deprecated_operations: []
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://developers.snap.com/status
+    http_status: 404
+  - fetched: '2026-08-13'
+    url: https://status.snap.com
+    http_status: 000
+    note: DNS/connection failure — host does not resolve.
+  - fetched: '2026-08-13'
+    url: https://snapchat.statuspage.io/api/v2/summary.json
+    http_status: 200
+    note: Unconfigured template; components named "(example)".

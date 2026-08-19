@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: probed
+probe: true
+source: https://trust.snap.com/
+url: https://trust.snap.com/
+api: Snap
+summary: >-
+  Snap Inc. publishes a trust center at trust.snap.com — a hosted "Snap
+  Assurance Profile" running on SecurityPal. The profile is live and published
+  (publishedAt 2026-07-28), belongs to Snap Inc., and advertises that document
+  downloads are allowed. The certification list itself is loaded client-side and
+  was not readable anonymously.
+
+vendor: SecurityPal
+profile:
+  company_name: Snap Inc.
+  title: "Snap Inc.'s Trust Center"
+  html_title: Snap Assurance Profile
+  published_at: '2026-07-28'
+  document_downloads_allowed: true
+  access: >-
+    Document access is gated behind the profile's own request flow; the served
+    HTML embeds only the profile header, not its sections.
+
+certifications: []
+certifications_note: >-
+  NO certifications are recorded because none could be read. The page returns
+  HTTP 200 with a React shell whose embedded JSON payload carries the profile
+  header only — no SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP, GDPR or CSA STAR
+  string appears anywhere in the served bytes, and the SecurityPal section API
+  was not reachable anonymously. Recording an empty list is the honest result:
+  Snap may well hold these reports, but a machine reading trust.snap.com cannot
+  confirm it, and this pipeline does not assert a certification it did not see.
+
+related:
+  - name: Snap Transparency Report
+    url: https://values.snap.com/privacy/transparency
+    status: 200
+    note: Semi-annual transparency reporting; not a security certification surface.
+  - name: Snap Privacy Center
+    url: https://values.snap.com/privacy/privacy-policy
+  - name: Snap Developer Terms
+    url: https://www.snap.com/terms/developer
+  - name: Vulnerability disclosure / bug bounty
+    url: https://hackerone.com/snapchat
+    ref: security/snap-vulnerability-disclosure.yml
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://trust.snap.com/
+    http_status: 200
+    content_type: text/html
+    finding: >-
+      Embedded application/json payload identifies companyName "Snap Inc.",
+      profileName "snap", htmlHeadTitle "Snap Assurance Profile",
+      documentDownloadsAllowed true, publishedAt 2026-07-28.
+  - fetched: '2026-08-13'
+    url: https://values.snap.com/privacy/transparency
+    http_status: 200

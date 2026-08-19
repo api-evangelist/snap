@@ -1,0 +1,137 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.snap.com/api/marketing-api/Ads-API/lead-generation-ads
+spec_type: webhook-catalog
+asyncapi_published: false
+api: Snapchat Marketing API — Lead Generation
+summary: >-
+  Snap publishes no AsyncAPI document for any product. It does document one real
+  outbound event surface: lead-generation webhooks. When an advertiser registers
+  a webhook integration against a lead-gen form, Snap POSTs a lead payload to the
+  registered URL in real time for every lead submitted through that form, signed
+  with an HMAC secret Snap returns at registration time. This file is the
+  captured webhook catalog, not a generated AsyncAPI — nothing here is invented.
+
+transport: https
+direction: outbound
+delivery: "Snap POSTs to the advertiser-registered webhook_url on every lead submission."
+cardinality: "One webhook integration per lead generation form."
+
+security:
+  scheme: hmac
+  secret_field: hmacSecret
+  issued_by: "Returned by Snap in the create-integration response."
+  purpose: "Verify the authenticity of webhook events."
+  note: >-
+    Snap documents that an HMAC secret is provided and is used to verify
+    authenticity, but does not publish the signature header name, the digest
+    algorithm, or the canonical string that is signed. A consumer cannot
+    implement verification from the public docs alone.
+
+management_api:
+  base_url: https://adsapi.snapchat.com/v1
+  auth: "OAuth 2.0 Bearer (see authentication/snap-authentication.yml)"
+  required_role: Organization Admin
+  operations:
+    - name: Create a webhook integration
+      method: POST
+      path: /v1/lead_gen/integrations/public_webhook
+      body:
+        webhook_integrations:
+          - form_id: "ID of the lead generation form"
+            webhook_url: "URL Snap will POST lead events to"
+      returns: [integrationId, formId, adAccountId, webhookUrl, partnerType, hmacSecret]
+    - name: Send test lead data
+      method: GET
+      path: /v1/lead_gen/integrations/{integration_id}/test
+      description: >-
+        Triggers a fixed dummy lead payload to the registered webhook URL as an
+        end-to-end delivery test. See sandbox/snap-sandbox.yml.
+    - name: List webhook integrations for a form
+      method: GET
+      path: /v1/lead_gen/forms/{form_id}/integrations
+      query:
+        partner_type: PUBLIC_WEBHOOK
+
+events:
+  - name: lead.submitted
+    published_name: null
+    note: >-
+      Snap does not name or type its webhook event; the payload carries no event
+      type discriminator. There is exactly one event shape, emitted whenever a
+      lead is submitted through the form. `lead.submitted` is our label for it
+      and is marked as such rather than presented as Snap's.
+    partner_type: PUBLIC_WEBHOOK
+    payload:
+      content_type: application/json
+      always_present:
+        - {field: form_id, type: string}
+        - {field: form_name, type: string}
+        - {field: ad_account_id, type: string}
+        - {field: campaign_id, type: string}
+        - {field: campaign_name, type: string}
+        - {field: ad_id, type: string}
+        - {field: ad_name, type: string}
+        - {field: ad_squad_id, type: string}
+        - {field: ad_squad_name, type: string}
+        - {field: lead_id, type: string}
+        - {field: create_time, type: string, format: "millisecond UNIX timestamp"}
+      conditional:
+        - {field: first_name, type: string}
+        - {field: last_name, type: string}
+        - {field: email, type: string}
+        - {field: phone_number, type: string}
+        - {field: postal_code, type: string}
+        - {field: address_line_1, type: string}
+        - {field: address_line_2, type: string}
+        - {field: address_level_1, type: string}
+        - {field: address_level_2, type: string}
+        - {field: birthday, type: string}
+        - {field: job_title, type: string}
+        - {field: company_name, type: string}
+        - {field: custom_field_1, type: string}
+        - {field: custom_field_2, type: string}
+        - {field: custom_field_3, type: string}
+        - {field: custom_field_4, type: string}
+        - {field: custom_field_5, type: string}
+        - {field: custom_field_6, type: string}
+        - {field: custom_field_7, type: string}
+        - {field: custom_field_8, type: string}
+        - {field: consent_1, type: string}
+        - {field: consent_2, type: string}
+        - {field: lead_preferred_status, type: string, enum: [LEAD_PREFERRED, LEAD_NOT_PREFERRED], applies_to: "forms using Preferred Choice Options"}
+      conditional_note: >-
+        Conditional fields appear only when the advertiser configured them on the
+        form, so a consumer must treat every non-always-present field as optional.
+
+reliability:
+  retries: undocumented
+  ordering: undocumented
+  at_least_once: undocumented
+  replay: undocumented
+  note: >-
+    Snap publishes no retry schedule, delivery guarantee, ordering guarantee or
+    replay mechanism for lead webhooks. The only recovery path documented is
+    polling the lead-gen read endpoints.
+
+pii:
+  present: true
+  note: >-
+    The payload carries plaintext PII (name, email, phone, address, birthday)
+    for consenting leads. It is NOT hashed, unlike the Conversions API user_data
+    fields which require SHA-256 hashed em/ph.
+
+other_event_surfaces:
+  - surface: Conversions API
+    direction: inbound
+    note: >-
+      CAPI is an inbound event INGESTION API (the caller POSTs events to Snap),
+      not an outbound event surface. It is captured as OpenAPI, not here.
+  - surface: Snap Pixel
+    direction: browser-to-Snap
+    note: Client-side event collection; see components/snap-components.yml.
+
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://developers.snap.com/api/marketing-api/Ads-API/lead-generation-ads.md
+    http_status: 200

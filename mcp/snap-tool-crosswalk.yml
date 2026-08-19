@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/snap-mcp.yml + openapi/snap-conversions-api-openapi.yml + openapi/snap-conversions-api-v3-openapi.yml
+api: Snap
+summary: >-
+  Snap's agent surface and its machine-readable surface do not overlap at all.
+  The hosted MCP server (mcp.snapchat.com/ads) projects the Snapchat Ads API,
+  which Snap documents in prose only and publishes no OpenAPI for. The only
+  OpenAPI Snap publishes describes the Conversions API, which has no MCP tool.
+  That is the finding this crosswalk records: every REST operation we hold is
+  rest_only, and the tool set on the other side cannot be enumerated because
+  tools/list is OAuth-gated.
+
+surfaces:
+  openapi:
+    - file: openapi/snap-conversions-api-openapi.yml
+      api: Snap Conversions API v2
+      server: https://tr.snapchat.com/
+      operations: 4
+    - file: openapi/snap-conversions-api-v3-openapi.yml
+      api: Snap Conversions API V3
+      server: https://tr.snapchat.com/
+      operations: 4
+  mcp:
+    url: https://mcp.snapchat.com/ads
+    backing_api: Snapchat Ads API (https://adsapi.snapchat.com/v1)
+    gated: true
+    gate: "HTTP 401 on tools/list; OAuth bearer required (scope snapads.read)"
+    access: read-only
+  graphql:
+    present: false
+
+crosswalk: []
+
+mcp_only:
+  - tool: unknown
+    reason: >-
+      Snap publishes no OpenAPI for the Snapchat Ads API that the MCP server
+      reads, and tools/list is auth-gated, so the tool names cannot be observed
+      or bound. Anything written here would be invented. Recorded as an
+      unresolved divergence rather than a guess.
+
+rest_only:
+  - capability: Conversions API v2 event ingestion
+    operations:
+      - sendData
+      - sendTestData
+      - conversionValidateLogs
+      - conversionValidateStats
+    source: openapi/snap-conversions-api-openapi.yml
+    note: No MCP tool; the MCP release is read-only and scoped to Ads data.
+  - capability: Conversions API V3 event ingestion
+    operations:
+      - sendEvent
+      - sendValidationEvent
+      - getValidationLogs
+      - getValidationStats
+    source: openapi/snap-conversions-api-v3-openapi.yml
+    note: No MCP tool; write surfaces are out of scope for the read-only MCP release.
+
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations_total: 8
+  rest_operations_with_tool: 0
+  note: >-
+    tools_named is 0 because the live list is gated, not because the server has
+    no tools. Re-run this crosswalk with an authorized token to bind rows.
+
+notes: >-
+  NO FABRICATION: no tool names, categories or inputSchemas are asserted. The
+  crosswalk exists to record that Snap's agent surface (Ads, read-only, MCP) and
+  its contract surface (Conversions, write, OpenAPI) are disjoint products, which
+  a per-artifact view would hide.

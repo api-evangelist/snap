@@ -1,10 +1,62 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: probed /.well-known/ on Snap hosts 2026-07-21
+source: probed /.well-known/ on every Snap API, docs and MCP host 2026-08-13
 hosts:
+  - host: https://mcp.snapchat.com
+    documents:
+      - path: /.well-known/oauth-protected-resource/ads   # RFC 9728
+        status: 200
+        file: snap-oauth-protected-resource.json
+        content_type: application/json
+        note: >-
+          Advertised by the MCP server itself in the
+          `WWW-Authenticate: Bearer resource_metadata="..."` challenge returned
+          from an unauthenticated POST to https://mcp.snapchat.com/ads.
+      - path: /.well-known/oauth-authorization-server/ads  # RFC 8414
+        status: 200
+        file: snap-oauth-authorization-server.json
+        content_type: application/json
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
   - host: https://developers.snap.com
     documents:
       - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://snap.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
         status: 404
   - host: https://adsapi.snapchat.com
     documents:
@@ -14,6 +66,14 @@ hosts:
         status: 404
       - path: /.well-known/oauth-authorization-server
         status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
   - host: https://accounts.snapchat.com
     documents:
       - path: /.well-known/security.txt
@@ -22,17 +82,45 @@ hosts:
         status: 404
       - path: /.well-known/oauth-authorization-server
         status: 404
-  - host: https://gcp.api.snapchat.com
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://api.snapkit.com
     documents:
+      - path: /.well-known/security.txt
+        status: 404
       - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
         status: 404
   - host: https://camera-kit-api.snapar.com
     documents:
       - path: /.well-known/security.txt
         status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+summary:
+  documents_served: 2
+  hosts_probed: 7
+  paths_probed: 43
 notes: >-
-  No /.well-known/ discovery documents (security.txt, OIDC discovery, OAuth
-  authorization-server metadata, api-catalog, ai-plugin.json) were served by any
-  probed Snap host. Absence recorded as valid data. OAuth endpoints are
-  documented in the Marketing API auth reference rather than via RFC 8414
-  discovery metadata.
+  The only /.well-known/ discovery documents Snap serves anywhere are the two
+  OAuth metadata files on the Ads MCP host (mcp.snapchat.com), and both are
+  sub-path scoped to the /ads resource — the unscoped
+  /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource
+  paths both 404. No security.txt, no OIDC discovery, no api-catalog, no
+  ai-plugin.json and no A2A agent card were served by any Snap host. Marketing
+  API OAuth endpoints on accounts.snapchat.com are documented in the auth
+  reference rather than via RFC 8414 discovery metadata. Recorded absence is
+  valid data.

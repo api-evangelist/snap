@@ -1,15 +1,27 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://developers.snap.com/api/marketing-api/Ads-API/authentication
-api: Snapchat Marketing API
+docs:
+  - https://developers.snap.com/api/marketing-api/Ads-API/authentication
+  - https://developers.snap.com/marketing-api/Conversions-API/GetStarted
+  - https://developers.snap.com/marketing-api/Ads-MCP/Introduction
+  - https://developers.snap.com/snap-kit/login-kit/overview
+api: Snap
 summary: >-
-  The Snapchat Marketing API uses OAuth 2.0 (authorization code grant with
-  refresh tokens). Access tokens are Bearer tokens presented in the
-  Authorization header and reflect the authorizing user's permissions. Access
-  tokens are short-lived (3600 seconds); refresh tokens are long-lived and used
-  to mint new access tokens on 401 "token expired".
+  Snap runs four distinct authentication models across its developer surface,
+  and they do not share credentials: OAuth 2.0 authorization-code for the
+  Marketing API, a static non-expiring token for the Conversions API, a separate
+  pre-registered-client OAuth flow for the Ads MCP server, and OAuth 2.0 /
+  OpenID Connect for Login Kit.
+
+summary_types:
+  types: [oauth2, http-bearer, apiKey]
+  api_key_in: [query]
+  oauth2_flows: [authorizationCode]
+
 security_schemes:
   - name: oauth2
+    label: Marketing API OAuth
     type: oauth2
     flow: authorizationCode
     authorization_endpoint: https://accounts.snapchat.com/login/oauth2/authorize
@@ -18,9 +30,7 @@ security_schemes:
     token_type: Bearer
     access_token_ttl_seconds: 3600
     header: "Authorization: Bearer {access_token}"
-    grants:
-      - authorization_code
-      - refresh_token
+    grants: [authorization_code, refresh_token]
     parameters:
       authorize: [client_id, redirect_uri, response_type=code, scope, state]
       token: [client_id, client_secret, code, grant_type, redirect_uri]
@@ -28,14 +38,96 @@ security_schemes:
       - snapchat-marketing-api
       - snapchat-offline-conversions-api
       - snapchat-profile-api
+    discovery:
+      rfc8414: false
+      note: >-
+        accounts.snapchat.com serves no /.well-known/oauth-authorization-server
+        (404, probed 2026-08-13). Endpoints are documented in prose only.
+    ref: scopes/snap-scopes.yml
+
+  - name: mcp-oauth
+    label: Snapchat Ads MCP OAuth
+    type: oauth2
+    flow: authorizationCode
+    issuer: https://mcp.snapchat.com/ads
+    resource: https://mcp.snapchat.com/ads
+    authorization_endpoint: https://mcp.snapchat.com/authorize
+    token_endpoint: https://mcp.snapchat.com/token
+    grants: [authorization_code, refresh_token]
+    pkce: S256
+    token_endpoint_auth_methods_supported: [none]
+    dynamic_client_registration: false
+    openid_connect: false
+    scopes: [snapads.read]
+    client_ids_preregistered:
+      - {agent: Claude, client_id: claude-snap-ads}
+      - {agent: Codex, client_id: codex-snap-ads}
+      - {agent: ChatGPT, client_id: chatgpt-snap-ads}
+      - {agent: Antigravity, client_id: antigravity-snap-ads}
+      - {agent: Gemini, client_id: gemini-snap-ads}
+    discovery:
+      rfc8414: true
+      rfc9728: true
+      authorization_server_metadata: well-known/snap-oauth-authorization-server.json
+      protected_resource_metadata: well-known/snap-oauth-protected-resource.json
+      challenge: 'WWW-Authenticate: Bearer resource_metadata="https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads"'
+    consent_model: >-
+      Two-stage: an Organization/Business Admin approves the agent for the
+      organization, then each member authorizes their own access. Per agent, per
+      member. A member reaches only what their existing Snapchat Ads permissions
+      already allow.
+    revocation: https://accounts.snapchat.com/v2/manage-apps
+    ref: mcp/snap-mcp.yml
+
+  - name: capi-static-token
+    label: Conversions API long-lived token
+    type: apiKey
+    in: query
+    parameter_name: access_token
+    expiry: none
+    rotation: "Tokens can be generated and deleted from Ads Manager -> Business Details -> Conversions API Tokens."
+    required_role: Organization Admin
+    scoping: >-
+      A token may only send events for the Pixel IDs and Snap App IDs that
+      belong to the Org where the token was generated; cross-org use fails.
+    declared_in: openapi/snap-conversions-api-v3-openapi.yml
+    risk_note: >-
+      The V3 spec carries the credential as a QUERY parameter on every operation
+      and declares no components.securitySchemes at all. A non-expiring bearer
+      credential in a URL lands in proxy logs, referrer headers and access logs.
+    source: https://developers.snap.com/marketing-api/Conversions-API/GetStarted
+
+  - name: bearerAuth
+    label: Conversions API v2 bearer
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    declared_in: openapi/snap-conversions-api-openapi.yml
+    applied: "Global security requirement on the v2 spec."
+
 snap_kit_login:
   summary: >-
     Snap Kit / Login Kit provides "Login with Snapchat" built on OAuth 2.0 with
     OpenID Connect support for identity, returning approved profile fields.
-  docs: https://developers.snap.com/snap-kit/login-kit/Technical-Documentation/OAuth2
+  docs: https://developers.snap.com/snap-kit/login-kit/overview
   type: [oauth2, openIdConnect]
+  sdk_status: >-
+    The Login Kit SDKs that wrapped the OAuth2 service (and supplied a drop-in
+    login button) are being deprecated. Snap's guidance is to implement OAuth2
+    directly; the underlying OAuth2 service remains fully available.
+
+errors:
+  - status: 401
+    signal: 'WWW-Authenticate: Bearer error="invalid_token", error_description="The access token expired"'
+    applies_to: Marketing API
+    remediation: Refresh the access token with the refresh_token grant and retry.
+  - status: 401
+    signal: 'WWW-Authenticate: Bearer resource_metadata="https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads"'
+    applies_to: Ads MCP
+    remediation: Complete the OAuth flow with the agent's pre-registered client id and scope snapads.read.
+
 notes: >-
-  Error on expired token returns HTTP 401 with header
-  `WWW-Authenticate: Bearer error="invalid_token", error_description="The access
-  token expired"`. Many standard OAuth 2.0 client libraries handle the
-  refresh-and-retry pattern automatically.
+  Many standard OAuth 2.0 client libraries handle the Marketing API
+  refresh-and-retry pattern automatically. The MCP server rejects the default
+  scope set requested by generic clients — Snap's own docs warn that the scope
+  must be exactly `snapads.read` or authorization fails.
