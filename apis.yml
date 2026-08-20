@@ -45,6 +45,18 @@ tags:
 - Company
 - Advertising
 - Marketing
+- Social-Media
+- Augmented Reality
+- Camera
+- Authentication
+- Identity
+- Conversions
+- Attribution
+- SDK
+tags_raw:
+- Company
+- Advertising
+- Marketing
 - Social Media
 - Augmented Reality
 - Camera
@@ -106,6 +118,11 @@ apis:
   humanURL: https://developers.snap.com/marketing-api/Conversions-API/Introduction
   baseURL: https://tr.snapchat.com
   tags:
+  - Conversions
+  - Attribution
+  - Measurements
+  - Event
+  tags_raw:
   - Conversions
   - Attribution
   - Measurement
