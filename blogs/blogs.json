@@ -1,0 +1,14 @@
+{
+  "repo": "snap",
+  "feeds": [
+    {
+      "source": "https://github.com/Snapchat",
+      "feed_url": "https://github.com/Snapchat",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-22T20:20:02Z"
+}
