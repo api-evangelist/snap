@@ -73,12 +73,10 @@ maintainers:
 apis:
 - name: Snapchat Marketing API
   description: >-
-    OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad
-    accounts, campaigns, ad squads, ads, creatives, media, audience segments,
-    measurement/reporting, the Conversions API (server-to-server event
-    tracking), the Ads Gallery API, and the Public Profile API. Served from
-    adsapi.snapchat.com/v1 with cursor pagination (limit 50-1000) and a
-    request_status/request_id response envelope.
+    OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad accounts, campaigns, ad squads,
+    ads, creatives, media, audience segments, measurement/reporting, the Conversions API (server-to-server
+    event tracking), the Ads Gallery API, and the Public Profile API. Served from adsapi.snapchat.com/v1
+    with cursor pagination (limit 50-1000) and a request_status/request_id response envelope.
   humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
   baseURL: https://adsapi.snapchat.com/v1
   tags:
@@ -105,57 +103,14 @@ apis:
     url: sandbox/snap-sandbox.yml
   - type: ChangeLog
     url: changelog/snap-changelog.yml
-- name: Snap Conversions API
-  description: >-
-    Server-to-server conversion event ingestion for web, app, and offline
-    events, keyed by asset (Pixel ID for web/offline, Snap App ID for mobile
-    app). Served from tr.snapchat.com; v3 (/v3/{asset_id}/events) supersedes v2
-    (/v2/conversion). This is the one Snap surface with published OpenAPI 3.0.3
-    — Snap ships api/openapi.yaml inside its own Business SDK repositories on
-    github.com/Snapchat, and the Java, Python, PHP, Ruby, and Go SDKs are
-    generated from it. Authenticated with a static, non-expiring Conversions API
-    token passed as an access_token query parameter.
-  humanURL: https://developers.snap.com/marketing-api/Conversions-API/Introduction
-  baseURL: https://tr.snapchat.com
-  tags:
-  - Conversions
-  - Attribution
-  - Measurements
-  - Event
-  tags_raw:
-  - Conversions
-  - Attribution
-  - Measurement
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/snap-conversions-api-v3-openapi.yml
-  - type: OpenAPI
-    url: openapi/snap-conversions-api-openapi.yml
-  - type: Overlay
-    url: overlays/snap-conversions-api-v3-overlay.yaml
-  - type: Overlay
-    url: overlays/snap-conversions-api-overlay.yaml
-  - type: Authentication
-    url: authentication/snap-authentication.yml
-  - type: Sandbox
-    url: sandbox/snap-sandbox.yml
-  - type: RateLimits
-    url: rate-limits/snap-rate-limits.yml
-  - type: DataModel
-    url: data-model/snap-data-model.yml
-  - type: AgentSkill
-    url: skills/snap-send-conversion-events.md
 - name: Snapchat Ads MCP
   description: >-
-    Snap's first-party hosted Model Context Protocol server, letting supported
-    agents read the caller's authorized Snapchat Ads data over streamable HTTP.
-    Read-only in this release; write access is documented as planned. OAuth 2.0
-    with PKCE against pre-registered client ids for Claude, Codex, ChatGPT,
-    Antigravity, and Gemini, scoped to snapads.read. Onboarding is self-service:
-    an organization admin approves each agent, then each member authorizes their
-    own access, and a member reaches only what their existing Snapchat Ads
-    permissions already allow.
+    Snap's first-party hosted Model Context Protocol server, letting supported agents read the caller's
+    authorized Snapchat Ads data over streamable HTTP. Read-only in this release; write access is documented
+    as planned. OAuth 2.0 with PKCE against pre-registered client ids for Claude, Codex, ChatGPT, Antigravity,
+    and Gemini, scoped to snapads.read. Onboarding is self-service: an organization admin approves each
+    agent, then each member authorizes their own access, and a member reaches only what their existing
+    Snapchat Ads permissions already allow.
   humanURL: https://developers.snap.com/marketing-api/Ads-MCP/Introduction
   baseURL: https://mcp.snapchat.com/ads
   tags:
@@ -175,10 +130,9 @@ apis:
     url: well-known/snap-well-known.yml
 - name: Snap Kit / Login Kit
   description: >-
-    OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat",
-    plus Creative Kit and Bitmoji Kit. Lets third-party apps authenticate
-    Snapchatters, fetch approved profile fields, and share content back into
-    Snapchat.
+    OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat", plus Creative Kit and Bitmoji
+    Kit. Lets third-party apps authenticate Snapchatters, fetch approved profile fields, and share content
+    back into Snapchat.
   humanURL: https://developers.snap.com/snap-kit/login-kit/Technical-Documentation/OAuth2
   baseURL: https://api.snapkit.com
   tags:
@@ -187,16 +141,53 @@ apis:
   - OpenID Connect
 - name: Camera Kit
   description: >-
-    SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio
-    content) into third-party mobile and web apps, including a push-to-device
-    API for managing Lens groups and experiences.
+    SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio content) into third-party mobile
+    and web apps, including a push-to-device API for managing Lens groups and experiences.
   humanURL: https://developers.snap.com/camera-kit/home
   baseURL: https://camera-kit-api.snapar.com
   tags:
   - Augmented Reality
   - Camera
   - SDK
+- aid: snap:snap-conversion-api
+  name: Snap Conversion API
+  description: The Conversion API from Snap — 4 operation(s) for conversion.
+  humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+  baseURL: https://adsapi.snapchat.com/v1
+  tags:
+  - Conversion
+  properties:
+  - type: OpenAPI
+    url: openapi/snap-conversion-api-openapi.yml
+  - type: Authentication
+    url: authentication/snap-authentication.yml
+  - type: Sandbox
+    url: sandbox/snap-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/snap-rate-limits.yml
+  - type: DataModel
+    url: data-model/snap-data-model.yml
+- aid: snap:snap-events-api
+  name: Snap Events API
+  description: The Events API from Snap — 4 operation(s) for events.
+  humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
+  baseURL: https://adsapi.snapchat.com/v1
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/snap-events-api-openapi.yml
+  - type: Authentication
+    url: authentication/snap-authentication.yml
+  - type: Sandbox
+    url: sandbox/snap-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/snap-rate-limits.yml
+  - type: DataModel
+    url: data-model/snap-data-model.yml
 common:
+- type: AgentSkill
+  url: skills/snap-send-conversion-events.md
 - type: DeveloperPortal
   url: https://developers.snap.com
 - type: Documentation
