@@ -185,6 +185,8 @@ apis:
   humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
   baseURL: https://adsapi.snapchat.com/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
