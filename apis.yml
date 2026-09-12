@@ -200,6 +200,8 @@ apis:
   - type: DataModel
     url: data-model/snap-data-model.yml
 common:
+- type: Website
+  url: https://www.snap.com/
 - type: AgentSkill
   url: skills/snap-send-conversion-events.md
 - type: DeveloperPortal
