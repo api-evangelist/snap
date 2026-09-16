@@ -1,23 +1,18 @@
 aid: snap
 name: Snap
-description: >-
-  Snap Inc. is the technology company behind Snapchat, Bitmoji, Spectacles, and
-  Lens Studio. Its Snap for Developers program exposes several public APIs and
-  SDKs: the Snapchat Marketing API (Ads API, Ads Gallery API, Conversions API,
-  and Public Profile API) for programmatically managing organizations, ad
-  accounts, campaigns, ad squads, ads, creatives, audiences, measurement, and
-  server-to-server conversion events; Snap Kit / Login Kit for OAuth 2.0 and
-  OpenID Connect powered "Login with Snapchat", Creative Kit, and Bitmoji Kit;
-  and Camera Kit for embedding Snap's augmented-reality Lenses into third-party
-  apps and web experiences. The Marketing API is an OAuth 2.0 REST API served
-  from adsapi.snapchat.com/v1 with cursor pagination and a structured request
-  envelope. Snap publishes first-party OpenAPI 3.0 for the Conversions API in
-  its own Business SDK repositories, ships a hosted read-only MCP server for
-  Snapchat Ads at mcp.snapchat.com/ads with pre-registered OAuth clients for
-  five agents, and delivers lead-generation leads by HMAC-signed webhook.
-  First-party SDKs are published for Java, Python, PHP, Ruby, Go, JavaScript
-  (Camera Kit on npm), Android, and iOS. Snap was surfaced as a portfolio
-  company of General Catalyst and enriched into the API Evangelist network.
+description: 'Snap Inc. is the technology company behind Snapchat, Bitmoji, Spectacles, and Lens Studio.
+  Its Snap for Developers program exposes several public APIs and SDKs: the Snapchat Marketing API (Ads
+  API, Ads Gallery API, Conversions API, and Public Profile API) for programmatically managing organizations,
+  ad accounts, campaigns, ad squads, ads, creatives, audiences, measurement, and server-to-server conversion
+  events; Snap Kit / Login Kit for OAuth 2.0 and OpenID Connect powered "Login with Snapchat", Creative
+  Kit, and Bitmoji Kit; and Camera Kit for embedding Snap''s augmented-reality Lenses into third-party
+  apps and web experiences. The Marketing API is an OAuth 2.0 REST API served from adsapi.snapchat.com/v1
+  with cursor pagination and a structured request envelope. Snap publishes first-party OpenAPI 3.0 for
+  the Conversions API in its own Business SDK repositories, ships a hosted read-only MCP server for Snapchat
+  Ads at mcp.snapchat.com/ads with pre-registered OAuth clients for five agents, and delivers lead-generation
+  leads by HMAC-signed webhook. First-party SDKs are published for Java, Python, PHP, Ruby, Go, JavaScript
+  (Camera Kit on npm), Android, and iOS. Snap was surfaced as a portfolio company of General Catalyst
+  and enriched into the API Evangelist network.'
 url: https://raw.githubusercontent.com/api-evangelist/snap/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -51,7 +46,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-08-13'
+modified: '2026-09-16'
 image: https://developers.snap.com/img/snap-developer-logo.png
 tags:
 - Company
@@ -84,11 +79,10 @@ maintainers:
   email: info@apis.io
 apis:
 - name: Snapchat Marketing API
-  description: >-
-    OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad accounts, campaigns, ad squads,
-    ads, creatives, media, audience segments, measurement/reporting, the Conversions API (server-to-server
+  description: 'OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad accounts, campaigns,
+    ad squads, ads, creatives, media, audience segments, measurement/reporting, the Conversions API (server-to-server
     event tracking), the Ads Gallery API, and the Public Profile API. Served from adsapi.snapchat.com/v1
-    with cursor pagination (limit 50-1000) and a request_status/request_id response envelope.
+    with cursor pagination (limit 50-1000) and a request_status/request_id response envelope.'
   humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
   baseURL: https://adsapi.snapchat.com/v1
   tags:
@@ -116,13 +110,12 @@ apis:
   - type: ChangeLog
     url: changelog/snap-changelog.yml
 - name: Snapchat Ads MCP
-  description: >-
-    Snap's first-party hosted Model Context Protocol server, letting supported agents read the caller's
-    authorized Snapchat Ads data over streamable HTTP. Read-only in this release; write access is documented
-    as planned. OAuth 2.0 with PKCE against pre-registered client ids for Claude, Codex, ChatGPT, Antigravity,
-    and Gemini, scoped to snapads.read. Onboarding is self-service: an organization admin approves each
-    agent, then each member authorizes their own access, and a member reaches only what their existing
-    Snapchat Ads permissions already allow.
+  description: 'Snap''s first-party hosted Model Context Protocol server, letting supported agents read
+    the caller''s authorized Snapchat Ads data over streamable HTTP. Read-only in this release; write
+    access is documented as planned. OAuth 2.0 with PKCE against pre-registered client ids for Claude,
+    Codex, ChatGPT, Antigravity, and Gemini, scoped to snapads.read. Onboarding is self-service: an organization
+    admin approves each agent, then each member authorizes their own access, and a member reaches only
+    what their existing Snapchat Ads permissions already allow.'
   humanURL: https://developers.snap.com/marketing-api/Ads-MCP/Introduction
   baseURL: https://mcp.snapchat.com/ads
   tags:
@@ -141,10 +134,9 @@ apis:
   - type: WellKnown
     url: well-known/snap-well-known.yml
 - name: Snap Kit / Login Kit
-  description: >-
-    OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat", plus Creative Kit and Bitmoji
-    Kit. Lets third-party apps authenticate Snapchatters, fetch approved profile fields, and share content
-    back into Snapchat.
+  description: OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat", plus Creative
+    Kit and Bitmoji Kit. Lets third-party apps authenticate Snapchatters, fetch approved profile fields,
+    and share content back into Snapchat.
   humanURL: https://developers.snap.com/snap-kit/login-kit/Technical-Documentation/OAuth2
   baseURL: https://api.snapkit.com
   tags:
@@ -152,9 +144,8 @@ apis:
   - Identity
   - OpenID Connect
 - name: Camera Kit
-  description: >-
-    SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio content) into third-party mobile
-    and web apps, including a push-to-device API for managing Lens groups and experiences.
+  description: SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio content) into third-party
+    mobile and web apps, including a push-to-device API for managing Lens groups and experiences.
   humanURL: https://developers.snap.com/camera-kit/home
   baseURL: https://camera-kit-api.snapar.com
   tags:
@@ -237,9 +228,9 @@ common:
 - type: ToolCrosswalk
   url: mcp/snap-tool-crosswalk.yml
 - type: OpenAPI
-  url: openapi/snap-conversions-api-v3-openapi.yml
+  url: openapi/_original/snap-conversions-api-v3-openapi.yml
 - type: OpenAPI
-  url: openapi/snap-conversions-api-openapi.yml
+  url: openapi/_original/snap-conversions-api-openapi.yml
 - type: Overlay
   url: overlays/snap-conversions-api-v3-overlay.yaml
 - type: Overlay
