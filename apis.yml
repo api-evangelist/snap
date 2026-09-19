@@ -57,7 +57,7 @@ tags:
 - Camera
 - Authentication
 - Identity
-- Conversions
+- Conversion
 - Attribution
 - SDK
 tags_raw:
@@ -86,6 +86,11 @@ apis:
   humanURL: https://developers.snap.com/api/marketing-api/Ads-API/introduction
   baseURL: https://adsapi.snapchat.com/v1
   tags:
+  - Advertising
+  - Marketing
+  - Conversion
+  - Attribution
+  tags_raw:
   - Advertising
   - Marketing
   - Conversions
