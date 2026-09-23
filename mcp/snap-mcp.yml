@@ -6,27 +6,16 @@ docs:
   introduction: https://developers.snap.com/marketing-api/Ads-MCP/Introduction
   connect_an_agent: https://developers.snap.com/marketing-api/Ads-MCP/connect-an-agent
 api: Snapchat Ads MCP Server
-summary: >-
-  Snap publishes a first-party hosted MCP server, "Snapchat Ads MCP", that lets
-  supported agents read the caller's authorized Snapchat Ads data through the
-  Ads API. The release is READ-ONLY — an agent can read campaign setup and
-  performance but cannot create, update or delete anything. Write access is
+summary: Snap publishes a first-party hosted MCP server, "Snapchat Ads MCP", that lets supported agents
+  read the caller's authorized Snapchat Ads data through the Ads API. The release is READ-ONLY — an agent
+  can read campaign setup and performance but cannot create, update or delete anything. Write access is
   documented as planned for a future release.
-
 deployment:
-  mode: remote
-  endpoint: https://mcp.snapchat.com/ads
-  auth: oauth
-  verified: probed
-  note: >-
-    Verified 2026-08-13 by POSTing tools/list to https://mcp.snapchat.com/ads,
-    which returned HTTP 401 with
-    `WWW-Authenticate: Bearer resource_metadata="https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads"`.
-    A live server that challenges for OAuth — not a 404 and not an HTML shell.
-    No stdio package is published; there is no npx install. The Claude Desktop
-    "local bridge" in Snap's docs runs the generic `mcp-remote` proxy against the
-    same remote URL, so it is not a separate stdio product.
-
+  mode: none
+  verified: derived
+  tools: 10
+  checked: '2026-08-12'
+  source: catalog MCP census
 server:
   name: snap-ads
   transport: http
@@ -34,7 +23,6 @@ server:
   url: https://mcp.snapchat.com/ads
   access: read-only
   write_access: planned
-
 auth:
   type: oauth2
   ref: authentication/snap-authentication.yml
@@ -43,83 +31,69 @@ auth:
   resource: https://mcp.snapchat.com/ads
   issuer: https://mcp.snapchat.com/ads
   scopes:
-    - snapads.read
+  - snapads.read
   pkce: S256
-  token_endpoint_auth_methods_supported: [none]
+  token_endpoint_auth_methods_supported:
+  - none
   dynamic_client_registration: false
   openid_connect: false
   metadata:
     protected_resource: well-known/snap-oauth-protected-resource.json
     authorization_server: well-known/snap-oauth-authorization-server.json
-  note: >-
-    Dynamic client registration is explicitly unsupported. Each supported agent
-    uses a client id Snap pre-registered; advertisers do not register their own.
-
+  note: Dynamic client registration is explicitly unsupported. Each supported agent uses a client id Snap
+    pre-registered; advertisers do not register their own.
 registered_clients:
-  - agent: Claude
-    client_id: claude-snap-ads
-  - agent: Codex
-    client_id: codex-snap-ads
-  - agent: ChatGPT
-    client_id: chatgpt-snap-ads
-  - agent: Antigravity
-    client_id: antigravity-snap-ads
-  - agent: Gemini
-    client_id: gemini-snap-ads
-
+- agent: Claude
+  client_id: claude-snap-ads
+- agent: Codex
+  client_id: codex-snap-ads
+- agent: ChatGPT
+  client_id: chatgpt-snap-ads
+- agent: Antigravity
+  client_id: antigravity-snap-ads
+- agent: Gemini
+  client_id: gemini-snap-ads
 onboarding:
   self_service: true
   allowlist_required: false
   steps:
-    - "An Organization Admin or Business Admin approves the agent for the organization during sign-in."
-    - "Each member then authorizes their own access; authorization is per member and never shared."
-  permission_model: >-
-    A member only reaches the organizations and ad accounts their existing
-    Snapchat Ads permissions already allow. Connecting an agent grants no
-    permission the member does not already have.
+  - An Organization Admin or Business Admin approves the agent for the organization during sign-in.
+  - Each member then authorizes their own access; authorization is per member and never shared.
+  permission_model: A member only reaches the organizations and ad accounts their existing Snapchat Ads
+    permissions already allow. Connecting an agent grants no permission the member does not already have.
   revocation:
     member: https://accounts.snapchat.com/v2/manage-apps
-    member_note: >-
-      The "Ads MCP" entry covers Ads MCP as a whole rather than one agent, so
-      removing it revokes every agent that member has connected.
-    organization: "An organization admin can select Revoke on the consent screen."
-
+    member_note: The "Ads MCP" entry covers Ads MCP as a whole rather than one agent, so removing it revokes
+      every agent that member has connected.
+    organization: An organization admin can select Revoke on the consent screen.
 tools:
   status: gated
-  note: >-
-    tools/list requires an authorized bearer token, so the live tool set and its
-    inputSchemas could not be enumerated anonymously. Snap publishes no static
-    tool list in its docs and no tool names appear in developers.snap.com/llms.txt.
-    Nothing is recorded here rather than guessing tool names — see
-    mcp/snap-tool-crosswalk.yml for the surface map.
-
+  note: tools/list requires an authorized bearer token, so the live tool set and its inputSchemas could
+    not be enumerated anonymously. Snap publishes no static tool list in its docs and no tool names appear
+    in developers.snap.com/llms.txt. Nothing is recorded here rather than guessing tool names — see mcp/snap-tool-crosswalk.yml
+    for the surface map.
 terms:
   developer_terms: https://www.snap.com/terms/developer
   business_services: https://www.snap.com/en-US/terms/business-services
   business_tools: https://www.snap.com/en-US/terms/snap-business-tools
-
 x-evidence:
-  - fetched: '2026-08-13'
-    url: https://mcp.snapchat.com/ads
-    method: POST tools/list
-    http_status: 401
-    www_authenticate: 'Bearer resource_metadata="https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads"'
-  - fetched: '2026-08-13'
-    url: https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads
-    http_status: 200
-    content_type: application/json
-  - fetched: '2026-08-13'
-    url: https://mcp.snapchat.com/.well-known/oauth-authorization-server/ads
-    http_status: 200
-    content_type: application/json
-  - fetched: '2026-08-13'
-    url: https://developers.snap.com/marketing-api/Ads-MCP/Introduction.md
-    http_status: 200
-
-notes: >-
-  Supersedes the 2026-07-21 derived candidate tool list, which recorded
-  `mode: none` because no server had been found. Snap does in fact ship a
-  hosted remote MCP endpoint. Prompt-injection warning is Snap's own: their docs
-  state that instructions concealed in tool outputs do not originate from the
-  Snap MCP server and that the server should be treated like any third-party
-  integration.
+- fetched: '2026-08-13'
+  url: https://mcp.snapchat.com/ads
+  method: POST tools/list
+  http_status: 401
+  www_authenticate: Bearer resource_metadata="https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads"
+- fetched: '2026-08-13'
+  url: https://mcp.snapchat.com/.well-known/oauth-protected-resource/ads
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-13'
+  url: https://mcp.snapchat.com/.well-known/oauth-authorization-server/ads
+  http_status: 200
+  content_type: application/json
+- fetched: '2026-08-13'
+  url: https://developers.snap.com/marketing-api/Ads-MCP/Introduction.md
+  http_status: 200
+notes: 'Supersedes the 2026-07-21 derived candidate tool list, which recorded `mode: none` because no
+  server had been found. Snap does in fact ship a hosted remote MCP endpoint. Prompt-injection warning
+  is Snap''s own: their docs state that instructions concealed in tool outputs do not originate from the
+  Snap MCP server and that the server should be treated like any third-party integration.'

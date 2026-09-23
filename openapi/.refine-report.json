@@ -1,0 +1,37 @@
+{
+  "provider": "snap",
+  "sources": [
+    "_original/snap-conversions-api-openapi-original.yml",
+    "_original/snap-conversions-api-v3-openapi-original.yml"
+  ],
+  "outputs": [
+    "snap-conversion-api-openapi.yml",
+    "snap-events-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "snap-conversions-api-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "snap-conversions-api-openapi-original.yml: tagged paths POST /v2/conversion -> Conversion",
+    "snap-conversions-api-openapi-original.yml: tagged paths POST /v2/conversion/validate -> Conversion",
+    "snap-conversions-api-openapi-original.yml: tagged paths GET /v2/conversion/validate/logs -> Conversion",
+    "snap-conversions-api-openapi-original.yml: tagged paths GET /v2/conversion/validate/stats -> Conversion",
+    "snap-conversions-api-openapi-original.yml: declared missing tag: Conversion",
+    "snap-conversions-api-v3-openapi-original.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "snap-conversions-api-v3-openapi-original.yml: tagged paths POST /v3/{asset_id}/events -> Events",
+    "snap-conversions-api-v3-openapi-original.yml: tagged paths POST /v3/{asset_id}/events/validate -> Events",
+    "snap-conversions-api-v3-openapi-original.yml: tagged paths GET /v3/{asset_id}/events/validate/logs -> Events",
+    "snap-conversions-api-v3-openapi-original.yml: tagged paths GET /v3/{asset_id}/events/validate/stats -> Events",
+    "snap-conversions-api-v3-openapi-original.yml: declared missing tag: Events",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/snap-conversions-api-v3-openapi.yml: archived document superseded by a larger archived document",
+    "_original/snap-conversions-api-openapi.yml: archived document superseded by a larger archived document",
+    "snap-conversion-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "snap-events-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
