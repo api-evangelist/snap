@@ -180,6 +180,32 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    EventLogs:
+      example:
+        warnings:
+        - warnings
+        - warnings
+        event: 0
+        errors:
+          codes:
+          - codes
+          - codes
+          error_msgs:
+          - error_msgs
+          - error_msgs
+        status: status
+      properties:
+        event:
+          type: integer
+        status:
+          type: string
+        errors:
+          $ref: '#/components/schemas/ErrorDetails'
+        warnings:
+          items:
+            type: string
+          type: array
+      type: object
     ValidateEvent:
       example:
         action_source: action_source
@@ -342,494 +368,6 @@ components:
             type: string
           type: array
       type: object
-    Content:
-      example:
-        quantity: quantity
-        item_price: item_price
-        delivery_category: delivery_category
-        id: id
-      properties:
-        id:
-          description: The ID of the content.
-          type: string
-        quantity:
-          description: The quantity of the content.
-          type: string
-        item_price:
-          description: The price of the content.
-          type: string
-        delivery_category:
-          description: The delivery category of the content.
-          type: string
-      type: object
-    CapiEvent:
-      example:
-        raw_request: raw_request
-        action_source: action_source
-        opt_out: true
-        user_data:
-          country:
-          - country
-          - country
-          st:
-          - st
-          - st
-          ln:
-          - ln
-          - ln
-          em:
-          - em
-          - em
-          mobile_ad_id: mobile_ad_id
-          fn:
-          - fn
-          - fn
-          client_ip_address: client_ip_address
-          sc_click_id: sc_click_id
-          ct:
-          - ct
-          - ct
-          zp:
-          - zp
-          - zp
-          client_user_agent: client_user_agent
-          ph:
-          - ph
-          - ph
-          idfv: idfv
-          sc_cookie1: sc_cookie1
-          ge:
-          - ge
-          - ge
-        asset_id: asset_id
-        event_source_url: event_source_url
-        event_id: event_id
-        integration: business-sdk-v3
-        event_name: event_name
-        data_processing_options:
-        - data_processing_options
-        - data_processing_options
-        app_data:
-          url_schemes:
-          - url_schemes
-          - url_schemes
-          extinfo:
-          - extinfo
-          - extinfo
-          install_referrer: install_referrer
-          windows_attribution_id: windows_attribution_id
-          campaign_ids: campaign_ids
-          advertiser_tracking_enabled: true
-          installer_package: installer_package
-          app_id: app_id
-        custom_data:
-          country: country
-          content_category: content_category
-          city: city
-          preferred_star_ratings:
-          - preferred_star_ratings
-          - preferred_star_ratings
-          delivery_category: delivery_category
-          search_string: search_string
-          returning_arrival_date: returning_arrival_date
-          suggested_hotels:
-          - suggested_hotels
-          - suggested_hotels
-          content_type: content_type
-          preferred_neighborhoods:
-          - preferred_neighborhoods
-          - preferred_neighborhoods
-          currency: currency
-          travel_end: travel_end
-          value: 6.027456183070403
-          hotel_score: hotel_score
-          sign_up_method: sign_up_method
-          returning_departure_date: returning_departure_date
-          content_ids:
-          - content_ids
-          - content_ids
-          num_infants: 2
-          brands: brands
-          custom_fields:
-            key: custom_fields
-          departing_arrival_date: departing_arrival_date
-          travel_start: travel_start
-          origin_airport: origin_airport
-          destination_airport: destination_airport
-          suggested_destinations:
-          - suggested_destinations
-          - suggested_destinations
-          num_adults: 5
-          contents:
-          - quantity: quantity
-            item_price: item_price
-            delivery_category: delivery_category
-            id: id
-          - quantity: quantity
-            item_price: item_price
-            delivery_category: delivery_category
-            id: id
-          num_items: 1
-          checkin_date: checkin_date
-          num_children: 5
-          neighborhood: neighborhood
-          region: region
-          postal_code: postal_code
-          order_id: order_id
-          departing_departure_date: departing_departure_date
-          status: status
-        request_id: request_id
-        event_time: 0
-      properties:
-        event_name:
-          type: string
-        event_time:
-          format: int64
-          type: integer
-        action_source:
-          type: string
-        event_id:
-          type: string
-        event_source_url:
-          type: string
-        opt_out:
-          type: boolean
-        data_processing_options:
-          items:
-            type: string
-          type: array
-        user_data:
-          $ref: '#/components/schemas/UserData'
-        custom_data:
-          $ref: '#/components/schemas/CustomData'
-        raw_request:
-          type: string
-        app_data:
-          $ref: '#/components/schemas/AppData'
-        asset_id:
-          type: string
-        request_id:
-          type: string
-        integration:
-          default: business-sdk-v3
-          type: string
-      type: object
-    UserData:
-      example:
-        country:
-        - country
-        - country
-        st:
-        - st
-        - st
-        ln:
-        - ln
-        - ln
-        em:
-        - em
-        - em
-        mobile_ad_id: mobile_ad_id
-        fn:
-        - fn
-        - fn
-        client_ip_address: client_ip_address
-        sc_click_id: sc_click_id
-        ct:
-        - ct
-        - ct
-        zp:
-        - zp
-        - zp
-        client_user_agent: client_user_agent
-        ph:
-        - ph
-        - ph
-        idfv: idfv
-        sc_cookie1: sc_cookie1
-        ge:
-        - ge
-        - ge
-      properties:
-        em:
-          items:
-            description: The email addresses of the user.
-            type: string
-          type: array
-        ph:
-          items:
-            description: The phone numbers of the user.
-            type: string
-          type: array
-        mobile_ad_id:
-          description: The mobile advertising ID of the user.
-          type: string
-        client_ip_address:
-          description: The IP address of the user.
-          type: string
-        client_user_agent:
-          description: The user agent of the user.
-          type: string
-        ct:
-          items:
-            description: The hashed value of the city the user. Accepts multiple values.
-            type: string
-          type: array
-        country:
-          items:
-            description: The hashed country of the user. Accepts multiple values
-            type: string
-          type: array
-        fn:
-          items:
-            description: The hashed first name of the user. Accepts multiple values.
-            type: string
-          type: array
-        ge:
-          items:
-            description: The hashed gender of the user. Accepts multiple values.
-            type: string
-          type: array
-        ln:
-          items:
-            description: The hashed last name of the user. Accepts multiple values.
-            type: string
-          type: array
-        st:
-          items:
-            description: The hashed state of the user. Accepts multiple values.
-            type: string
-          type: array
-        zp:
-          items:
-            description: The hashed ZIP code of the user. Accepts multiple values.
-            type: string
-          type: array
-        sc_click_id:
-          description: The click ID of the user.
-          type: string
-        sc_cookie1:
-          description: The cookie 1 of the user.
-          type: string
-        idfv:
-          type: string
-      type: object
-    GetStatsResponse:
-      example:
-        reason: reason
-        stats:
-          test:
-            event_count_past_hour: 6
-            latest_event_ts: 0
-          live:
-            event_count_past_hour: 6
-            latest_event_ts: 0
-        status: SUCCESS
-      properties:
-        status:
-          enum:
-          - SUCCESS
-          - FAILURE
-          type: string
-        reason:
-          type: string
-        stats:
-          $ref: '#/components/schemas/StatsData'
-    EventResponse:
-      example:
-        reason: reason
-        event: 0
-        errors:
-          codes:
-          - codes
-          - codes
-          error_msgs:
-          - error_msgs
-          - error_msgs
-        status: VALID
-      properties:
-        status:
-          enum:
-          - VALID
-          - INVALID
-          type: string
-        event:
-          description: The event identifier, only present in error responses.
-          type: integer
-        reason:
-          description: The reason for the status, present in successful responses.
-          type: string
-        errors:
-          $ref: '#/components/schemas/ErrorDetails'
-      type: object
-    EventLogs:
-      example:
-        warnings:
-        - warnings
-        - warnings
-        event: 0
-        errors:
-          codes:
-          - codes
-          - codes
-          error_msgs:
-          - error_msgs
-          - error_msgs
-        status: status
-      properties:
-        event:
-          type: integer
-        status:
-          type: string
-        errors:
-          $ref: '#/components/schemas/ErrorDetails'
-        warnings:
-          items:
-            type: string
-          type: array
-      type: object
-    EventMetadata:
-      example:
-        conversion_info:
-          raw_request: raw_request
-          action_source: action_source
-          opt_out: true
-          user_data:
-            country:
-            - country
-            - country
-            st:
-            - st
-            - st
-            ln:
-            - ln
-            - ln
-            em:
-            - em
-            - em
-            mobile_ad_id: mobile_ad_id
-            fn:
-            - fn
-            - fn
-            client_ip_address: client_ip_address
-            sc_click_id: sc_click_id
-            ct:
-            - ct
-            - ct
-            zp:
-            - zp
-            - zp
-            client_user_agent: client_user_agent
-            ph:
-            - ph
-            - ph
-            idfv: idfv
-            sc_cookie1: sc_cookie1
-            ge:
-            - ge
-            - ge
-          asset_id: asset_id
-          event_source_url: event_source_url
-          event_id: event_id
-          integration: business-sdk-v3
-          event_name: event_name
-          data_processing_options:
-          - data_processing_options
-          - data_processing_options
-          app_data:
-            url_schemes:
-            - url_schemes
-            - url_schemes
-            extinfo:
-            - extinfo
-            - extinfo
-            install_referrer: install_referrer
-            windows_attribution_id: windows_attribution_id
-            campaign_ids: campaign_ids
-            advertiser_tracking_enabled: true
-            installer_package: installer_package
-            app_id: app_id
-          custom_data:
-            country: country
-            content_category: content_category
-            city: city
-            preferred_star_ratings:
-            - preferred_star_ratings
-            - preferred_star_ratings
-            delivery_category: delivery_category
-            search_string: search_string
-            returning_arrival_date: returning_arrival_date
-            suggested_hotels:
-            - suggested_hotels
-            - suggested_hotels
-            content_type: content_type
-            preferred_neighborhoods:
-            - preferred_neighborhoods
-            - preferred_neighborhoods
-            currency: currency
-            travel_end: travel_end
-            value: 6.027456183070403
-            hotel_score: hotel_score
-            sign_up_method: sign_up_method
-            returning_departure_date: returning_departure_date
-            content_ids:
-            - content_ids
-            - content_ids
-            num_infants: 2
-            brands: brands
-            custom_fields:
-              key: custom_fields
-            departing_arrival_date: departing_arrival_date
-            travel_start: travel_start
-            origin_airport: origin_airport
-            destination_airport: destination_airport
-            suggested_destinations:
-            - suggested_destinations
-            - suggested_destinations
-            num_adults: 5
-            contents:
-            - quantity: quantity
-              item_price: item_price
-              delivery_category: delivery_category
-              id: id
-            - quantity: quantity
-              item_price: item_price
-              delivery_category: delivery_category
-              id: id
-            num_items: 1
-            checkin_date: checkin_date
-            num_children: 5
-            neighborhood: neighborhood
-            region: region
-            postal_code: postal_code
-            order_id: order_id
-            departing_departure_date: departing_departure_date
-            status: status
-          request_id: request_id
-          event_time: 0
-        pixel_id: pixel_id
-        app_id: app_id
-        snap_app_id: snap_app_id
-      properties:
-        pixel_id:
-          type: string
-        snap_app_id:
-          type: string
-        app_id:
-          type: string
-        conversion_info:
-          $ref: '#/components/schemas/CapiEvent'
-      type: object
-    StatsResponse:
-      example:
-        event_count_past_hour: 6
-        latest_event_ts: 0
-      properties:
-        latest_event_ts:
-          format: int64
-          type: integer
-        event_count_past_hour:
-          format: int64
-          type: integer
     GetLogsResponse:
       example:
         reason: reason
@@ -1116,74 +654,17 @@ components:
             $ref: '#/components/schemas/ValidateEvent'
           type: array
       type: object
-    StatsData:
+    StatsResponse:
       example:
-        test:
-          event_count_past_hour: 6
-          latest_event_ts: 0
-        live:
-          event_count_past_hour: 6
-          latest_event_ts: 0
+        event_count_past_hour: 6
+        latest_event_ts: 0
       properties:
-        test:
-          $ref: '#/components/schemas/StatsResponse'
-        live:
-          $ref: '#/components/schemas/StatsResponse'
-      type: object
-    sendEvent_request:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/CapiEvent'
-          type: array
-        test_event_code:
-          description: Add a test event code to the conversion to send a debug/test event.
-          type: string
-      type: object
-    AppData:
-      example:
-        url_schemes:
-        - url_schemes
-        - url_schemes
-        extinfo:
-        - extinfo
-        - extinfo
-        install_referrer: install_referrer
-        windows_attribution_id: windows_attribution_id
-        campaign_ids: campaign_ids
-        advertiser_tracking_enabled: true
-        installer_package: installer_package
-        app_id: app_id
-      properties:
-        extinfo:
-          items:
-            description: A list separated by commas of the app extension information.
-            type: string
-          type: array
-        campaign_ids:
-          description: The campaign IDs for the app.
-          type: string
-        install_referrer:
-          description: The install referrer for the app.
-          type: string
-        installer_package:
-          description: The installer package for the app.
-          type: string
-        url_schemes:
-          items:
-            description: The URL schemes for the app.
-            type: string
-          type: array
-        windows_attribution_id:
-          description: The Windows attribution ID for the app.
-          type: string
-        app_id:
-          description: The app ID for the app.
-          type: string
-        advertiser_tracking_enabled:
-          description: Whether advertiser tracking is enabled for the app.
-          type: boolean
-      type: object
+        latest_event_ts:
+          format: int64
+          type: integer
+        event_count_past_hour:
+          format: int64
+          type: integer
     sendValidationEvent_request:
       properties:
         data:
@@ -1235,6 +716,402 @@ components:
           items:
             $ref: '#/components/schemas/EventLogs'
           type: array
+      type: object
+    EventMetadata:
+      example:
+        conversion_info:
+          raw_request: raw_request
+          action_source: action_source
+          opt_out: true
+          user_data:
+            country:
+            - country
+            - country
+            st:
+            - st
+            - st
+            ln:
+            - ln
+            - ln
+            em:
+            - em
+            - em
+            mobile_ad_id: mobile_ad_id
+            fn:
+            - fn
+            - fn
+            client_ip_address: client_ip_address
+            sc_click_id: sc_click_id
+            ct:
+            - ct
+            - ct
+            zp:
+            - zp
+            - zp
+            client_user_agent: client_user_agent
+            ph:
+            - ph
+            - ph
+            idfv: idfv
+            sc_cookie1: sc_cookie1
+            ge:
+            - ge
+            - ge
+          asset_id: asset_id
+          event_source_url: event_source_url
+          event_id: event_id
+          integration: business-sdk-v3
+          event_name: event_name
+          data_processing_options:
+          - data_processing_options
+          - data_processing_options
+          app_data:
+            url_schemes:
+            - url_schemes
+            - url_schemes
+            extinfo:
+            - extinfo
+            - extinfo
+            install_referrer: install_referrer
+            windows_attribution_id: windows_attribution_id
+            campaign_ids: campaign_ids
+            advertiser_tracking_enabled: true
+            installer_package: installer_package
+            app_id: app_id
+          custom_data:
+            country: country
+            content_category: content_category
+            city: city
+            preferred_star_ratings:
+            - preferred_star_ratings
+            - preferred_star_ratings
+            delivery_category: delivery_category
+            search_string: search_string
+            returning_arrival_date: returning_arrival_date
+            suggested_hotels:
+            - suggested_hotels
+            - suggested_hotels
+            content_type: content_type
+            preferred_neighborhoods:
+            - preferred_neighborhoods
+            - preferred_neighborhoods
+            currency: currency
+            travel_end: travel_end
+            value: 6.027456183070403
+            hotel_score: hotel_score
+            sign_up_method: sign_up_method
+            returning_departure_date: returning_departure_date
+            content_ids:
+            - content_ids
+            - content_ids
+            num_infants: 2
+            brands: brands
+            custom_fields:
+              key: custom_fields
+            departing_arrival_date: departing_arrival_date
+            travel_start: travel_start
+            origin_airport: origin_airport
+            destination_airport: destination_airport
+            suggested_destinations:
+            - suggested_destinations
+            - suggested_destinations
+            num_adults: 5
+            contents:
+            - quantity: quantity
+              item_price: item_price
+              delivery_category: delivery_category
+              id: id
+            - quantity: quantity
+              item_price: item_price
+              delivery_category: delivery_category
+              id: id
+            num_items: 1
+            checkin_date: checkin_date
+            num_children: 5
+            neighborhood: neighborhood
+            region: region
+            postal_code: postal_code
+            order_id: order_id
+            departing_departure_date: departing_departure_date
+            status: status
+          request_id: request_id
+          event_time: 0
+        pixel_id: pixel_id
+        app_id: app_id
+        snap_app_id: snap_app_id
+      properties:
+        pixel_id:
+          type: string
+        snap_app_id:
+          type: string
+        app_id:
+          type: string
+        conversion_info:
+          $ref: '#/components/schemas/CapiEvent'
+      type: object
+    Content:
+      example:
+        quantity: quantity
+        item_price: item_price
+        delivery_category: delivery_category
+        id: id
+      properties:
+        id:
+          description: The ID of the content.
+          type: string
+        quantity:
+          description: The quantity of the content.
+          type: string
+        item_price:
+          description: The price of the content.
+          type: string
+        delivery_category:
+          description: The delivery category of the content.
+          type: string
+      type: object
+    ErrorDetails:
+      example:
+        codes:
+        - codes
+        - codes
+        error_msgs:
+        - error_msgs
+        - error_msgs
+      properties:
+        codes:
+          description: Error codes associated with the errors.
+          items:
+            type: string
+          type: array
+        error_msgs:
+          description: Error messages detailing the reasons for the error.
+          items:
+            type: string
+          type: array
+      type: object
+    sendEvent_request:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CapiEvent'
+          type: array
+        test_event_code:
+          description: Add a test event code to the conversion to send a debug/test event.
+          type: string
+      type: object
+    StatsData:
+      example:
+        test:
+          event_count_past_hour: 6
+          latest_event_ts: 0
+        live:
+          event_count_past_hour: 6
+          latest_event_ts: 0
+      properties:
+        test:
+          $ref: '#/components/schemas/StatsResponse'
+        live:
+          $ref: '#/components/schemas/StatsResponse'
+      type: object
+    GetStatsResponse:
+      example:
+        reason: reason
+        stats:
+          test:
+            event_count_past_hour: 6
+            latest_event_ts: 0
+          live:
+            event_count_past_hour: 6
+            latest_event_ts: 0
+        status: SUCCESS
+      properties:
+        status:
+          enum:
+          - SUCCESS
+          - FAILURE
+          type: string
+        reason:
+          type: string
+        stats:
+          $ref: '#/components/schemas/StatsData'
+    CapiEvent:
+      example:
+        raw_request: raw_request
+        action_source: action_source
+        opt_out: true
+        user_data:
+          country:
+          - country
+          - country
+          st:
+          - st
+          - st
+          ln:
+          - ln
+          - ln
+          em:
+          - em
+          - em
+          mobile_ad_id: mobile_ad_id
+          fn:
+          - fn
+          - fn
+          client_ip_address: client_ip_address
+          sc_click_id: sc_click_id
+          ct:
+          - ct
+          - ct
+          zp:
+          - zp
+          - zp
+          client_user_agent: client_user_agent
+          ph:
+          - ph
+          - ph
+          idfv: idfv
+          sc_cookie1: sc_cookie1
+          ge:
+          - ge
+          - ge
+        asset_id: asset_id
+        event_source_url: event_source_url
+        event_id: event_id
+        integration: business-sdk-v3
+        event_name: event_name
+        data_processing_options:
+        - data_processing_options
+        - data_processing_options
+        app_data:
+          url_schemes:
+          - url_schemes
+          - url_schemes
+          extinfo:
+          - extinfo
+          - extinfo
+          install_referrer: install_referrer
+          windows_attribution_id: windows_attribution_id
+          campaign_ids: campaign_ids
+          advertiser_tracking_enabled: true
+          installer_package: installer_package
+          app_id: app_id
+        custom_data:
+          country: country
+          content_category: content_category
+          city: city
+          preferred_star_ratings:
+          - preferred_star_ratings
+          - preferred_star_ratings
+          delivery_category: delivery_category
+          search_string: search_string
+          returning_arrival_date: returning_arrival_date
+          suggested_hotels:
+          - suggested_hotels
+          - suggested_hotels
+          content_type: content_type
+          preferred_neighborhoods:
+          - preferred_neighborhoods
+          - preferred_neighborhoods
+          currency: currency
+          travel_end: travel_end
+          value: 6.027456183070403
+          hotel_score: hotel_score
+          sign_up_method: sign_up_method
+          returning_departure_date: returning_departure_date
+          content_ids:
+          - content_ids
+          - content_ids
+          num_infants: 2
+          brands: brands
+          custom_fields:
+            key: custom_fields
+          departing_arrival_date: departing_arrival_date
+          travel_start: travel_start
+          origin_airport: origin_airport
+          destination_airport: destination_airport
+          suggested_destinations:
+          - suggested_destinations
+          - suggested_destinations
+          num_adults: 5
+          contents:
+          - quantity: quantity
+            item_price: item_price
+            delivery_category: delivery_category
+            id: id
+          - quantity: quantity
+            item_price: item_price
+            delivery_category: delivery_category
+            id: id
+          num_items: 1
+          checkin_date: checkin_date
+          num_children: 5
+          neighborhood: neighborhood
+          region: region
+          postal_code: postal_code
+          order_id: order_id
+          departing_departure_date: departing_departure_date
+          status: status
+        request_id: request_id
+        event_time: 0
+      properties:
+        event_name:
+          type: string
+        event_time:
+          format: int64
+          type: integer
+        action_source:
+          type: string
+        event_id:
+          type: string
+        event_source_url:
+          type: string
+        opt_out:
+          type: boolean
+        data_processing_options:
+          items:
+            type: string
+          type: array
+        user_data:
+          $ref: '#/components/schemas/UserData'
+        custom_data:
+          $ref: '#/components/schemas/CustomData'
+        raw_request:
+          type: string
+        app_data:
+          $ref: '#/components/schemas/AppData'
+        asset_id:
+          type: string
+        request_id:
+          type: string
+        integration:
+          default: business-sdk-v3
+          type: string
+      type: object
+    EventResponse:
+      example:
+        reason: reason
+        event: 0
+        errors:
+          codes:
+          - codes
+          - codes
+          error_msgs:
+          - error_msgs
+          - error_msgs
+        status: VALID
+      properties:
+        status:
+          enum:
+          - VALID
+          - INVALID
+          type: string
+        event:
+          description: The event identifier, only present in error responses.
+          type: integer
+        reason:
+          description: The reason for the status, present in successful responses.
+          type: string
+        errors:
+          $ref: '#/components/schemas/ErrorDetails'
       type: object
     CustomData:
       example:
@@ -1415,23 +1292,146 @@ components:
           description: The sign-up method for the user.
           type: string
       type: object
-    ErrorDetails:
+    UserData:
       example:
-        codes:
-        - codes
-        - codes
-        error_msgs:
-        - error_msgs
-        - error_msgs
+        country:
+        - country
+        - country
+        st:
+        - st
+        - st
+        ln:
+        - ln
+        - ln
+        em:
+        - em
+        - em
+        mobile_ad_id: mobile_ad_id
+        fn:
+        - fn
+        - fn
+        client_ip_address: client_ip_address
+        sc_click_id: sc_click_id
+        ct:
+        - ct
+        - ct
+        zp:
+        - zp
+        - zp
+        client_user_agent: client_user_agent
+        ph:
+        - ph
+        - ph
+        idfv: idfv
+        sc_cookie1: sc_cookie1
+        ge:
+        - ge
+        - ge
       properties:
-        codes:
-          description: Error codes associated with the errors.
+        em:
           items:
+            description: The email addresses of the user.
             type: string
           type: array
-        error_msgs:
-          description: Error messages detailing the reasons for the error.
+        ph:
           items:
+            description: The phone numbers of the user.
             type: string
           type: array
+        mobile_ad_id:
+          description: The mobile advertising ID of the user.
+          type: string
+        client_ip_address:
+          description: The IP address of the user.
+          type: string
+        client_user_agent:
+          description: The user agent of the user.
+          type: string
+        ct:
+          items:
+            description: The hashed value of the city the user. Accepts multiple values.
+            type: string
+          type: array
+        country:
+          items:
+            description: The hashed country of the user. Accepts multiple values
+            type: string
+          type: array
+        fn:
+          items:
+            description: The hashed first name of the user. Accepts multiple values.
+            type: string
+          type: array
+        ge:
+          items:
+            description: The hashed gender of the user. Accepts multiple values.
+            type: string
+          type: array
+        ln:
+          items:
+            description: The hashed last name of the user. Accepts multiple values.
+            type: string
+          type: array
+        st:
+          items:
+            description: The hashed state of the user. Accepts multiple values.
+            type: string
+          type: array
+        zp:
+          items:
+            description: The hashed ZIP code of the user. Accepts multiple values.
+            type: string
+          type: array
+        sc_click_id:
+          description: The click ID of the user.
+          type: string
+        sc_cookie1:
+          description: The cookie 1 of the user.
+          type: string
+        idfv:
+          type: string
+      type: object
+    AppData:
+      example:
+        url_schemes:
+        - url_schemes
+        - url_schemes
+        extinfo:
+        - extinfo
+        - extinfo
+        install_referrer: install_referrer
+        windows_attribution_id: windows_attribution_id
+        campaign_ids: campaign_ids
+        advertiser_tracking_enabled: true
+        installer_package: installer_package
+        app_id: app_id
+      properties:
+        extinfo:
+          items:
+            description: A list separated by commas of the app extension information.
+            type: string
+          type: array
+        campaign_ids:
+          description: The campaign IDs for the app.
+          type: string
+        install_referrer:
+          description: The install referrer for the app.
+          type: string
+        installer_package:
+          description: The installer package for the app.
+          type: string
+        url_schemes:
+          items:
+            description: The URL schemes for the app.
+            type: string
+          type: array
+        windows_attribution_id:
+          description: The Windows attribution ID for the app.
+          type: string
+        app_id:
+          description: The app ID for the app.
+          type: string
+        advertiser_tracking_enabled:
+          description: Whether advertiser tracking is enabled for the app.
+          type: boolean
       type: object
