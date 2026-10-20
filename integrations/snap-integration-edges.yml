@@ -29,16 +29,40 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Khronos Group (members)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.khronos.org/members/list
+  category: graphics standards body membership
+  partner_tier: contributor
+  contract_reference:
+    register: Khronos Group members list (khronos.org/members/list)
+    standard: Khronos Group
+    spec_file: null
+    role: khronos-member
+    registered_name: Snap Inc
+    register_id: https://www.khronos.org/members/list
+    matched_domain: snap.com
+    matched_by: domain+name-among-holders
+    signal_note: 'participation only: membership level is partner_tier, never counted'
+    detected_by: sweep-xr-graphics.py
+    detected: '2026-10-20'
+  detected_by: sweep-xr-graphics.py
+  first_seen: '2026-10-20'
 generated: '2026-10-18'
 method: searched
 source:
-- https://api.nuget.org/v3
-- https://crates.io/api/v1
-- https://proxy.golang.org
-- https://pypi.org/pypi
 - https://registry.npmjs.org
-- https://repo1.maven.org/maven2
+- https://pypi.org/pypi
 - https://rubygems.org/api/v1
+- https://crates.io/api/v1
+- https://repo1.maven.org/maven2
+- https://api.nuget.org/v3
+- https://proxy.golang.org
 checked:
 - https://api.nuget.org/v3
 - https://crates.io/api/v1
@@ -47,3 +71,8 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- https://landscape.aousd.org/data/full.json
+- https://www.khronos.org/conformance/adopters/conformant-companies
+- https://www.khronos.org/conformance/adopters/conformant-products
+- https://www.khronos.org/conformance/adopters/file-format-adopters
+- https://www.khronos.org/members/list
