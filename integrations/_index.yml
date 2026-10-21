@@ -57,3 +57,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: snap-google-play-developer-google-play-sdk-index
+  label: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_name: Google Play Developer (Google Play SDK Index)
+  category: mobile SDK (ads, marketing-and-engagement, social)
+  type: marketplace
+  marketplace: Google Play SDK Index
+  channel: partner-built
+  evidence: https://play.google.com/sdks/details/com-snap-adkit-adkit
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
