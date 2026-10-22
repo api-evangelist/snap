@@ -73,6 +73,25 @@ edges:
   category: mobile SDK (ads, marketing-and-engagement, social)
   publisher_verified:
   - Registered in Google Play SDK Console
+- partner_name: Wix (own)
+  partner: wix
+  partner_match: mirror
+  mirror_match: domain+name-among-holders
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.wix.com/app-market/developer/snap-inc
+  mirror_of: wix/integrations/wix-integration-edges.yml
+  apps:
+  - Snapchat Ads
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Ads
+  publisher_verified:
+  - Verified by Wix
 generated: '2026-10-18'
 method: searched
 source:
@@ -97,3 +116,4 @@ checked:
 - https://www.khronos.org/conformance/adopters/file-format-adopters
 - https://www.khronos.org/members/list
 - google-play/integrations/google-play-integration-edges.yml
+- wix/integrations/wix-integration-edges.yml
