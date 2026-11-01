@@ -64,6 +64,139 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Snap is a company surfaced as a portfolio company of general-catalyst and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Snap Inc. is the technology company behind Snapchat, Bitmoji, Spectacles, and Lens Studio. Its Snap for Developers program exposes several public APIs and SDKs: the Snapchat Marketing API (Ads API, Ads Gallery API, Conversions API, and Public Profile API) for programmatically managing organizations, ad accounts, campaigns, ad squads, ads, creatives, audiences, measurement, and server-to-server conversion events; Snap Kit / Login Kit for OAuth 2.0 and OpenID Connect powered "Login with Snapchat", Creative Kit, and Bitmoji Kit; and Camera Kit for embedding Snap's augmented-reality Lenses into third-party apps and web experiences. The Marketing API is an OAuth 2.0 REST API served from adsapi.snapchat.com/v1 with cursor pagination and a structured request envelope. Snap publishes first-party OpenAPI 3.0 for the Conversions API in its own Business SDK repositories, ships a hosted read-only MCP server for Snapchat Ads at mcp.snapchat.com/ads with pre-registered OAuth clients for five agents, and delivers lead-generation leads by HMAC-signed webhook. First-party SDKs are published for Java, Python, PHP, Ruby, Go, JavaScript (Camera Kit on npm), Android, and iOS. Snap was surfaced as a portfolio company of General Catalyst and enriched into the API Evangelist network.
 
-Backed by: general-catalyst
+**Areas:** Company · Advertising · Marketing · Social Media · Augmented Reality · Camera · Authentication · Identity · Conversion · Attribution · SDK
+
+## Snap on APIs.io
+
+Everything profiled for Snap is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/snap/](https://apis.io/providers/snap/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [Snapchat Marketing API](https://apis.io/apis/snap/snapchat-marketing-api/) — OAuth 2.0 REST API for managing Snapchat advertising: organizations, ad accounts, campaigns, ad squads, ads, creatives, media, audience segments,…
+- [Snapchat Ads MCP](https://apis.io/apis/snap/snapchat-ads-mcp/) — Snap's first-party hosted Model Context Protocol server, letting supported agents read the caller's authorized Snapchat Ads data over streamable HTTP.…
+- [Snap Kit / Login Kit](https://apis.io/apis/snap/snap-kit-login-kit/) — OAuth 2.0 and OpenID Connect identity platform for "Login with Snapchat", plus Creative Kit and Bitmoji Kit. Lets third-party apps authenticate…
+- [Camera Kit](https://apis.io/apis/snap/camera-kit/) — SDK and API for embedding Snap's augmented-reality Lenses (Lens Studio content) into third-party mobile and web apps, including a push-to-device API for…
+- [Snap Conversion API](https://apis.io/apis/snap/snap-conversion-api/) — The Conversion API from Snap — 4 operation(s) for conversion.
+- [Snap Events API](https://apis.io/apis/snap/snap-events-api/) — The Events API from Snap — 4 operation(s) for events.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Snap Lead Gen Webhooks](https://apis.io/asyncapis/snap/snap-lead-gen-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [snap-ads](https://apis.io/servers/snap/snap-ads/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Snap Conversions Api Overlay](https://apis.io/overlays/snap/snap-conversions-api-overlay/)
+- [Snap Conversions Api V3 Overlay](https://apis.io/overlays/snap/snap-conversions-api-v3-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Snap Authentication](https://apis.io/security/snap/snap-authentication/)
+- [Snap Domain Security](https://apis.io/security/snap/snap-domain-security/)
+- [Snap Trust Center](https://apis.io/security/snap/snap-trust-center/)
+- [Snap Vulnerability Disclosure](https://apis.io/security/snap/snap-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Snap Scopes](https://apis.io/scopes/snap/snap-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Snap Plans Pricing](https://apis.io/plans/snap/snap-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Snap Rate Limits](https://apis.io/rate-limits/snap/snap-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.snap.com/)
+- [Documentation](https://developers.snap.com/api/marketing-api/Ads-API/introduction)
+- [Getting started](https://developers.snap.com/api/marketing-api/Ads-API/quick-start)
+- [API reference](https://developers.snap.com/api/marketing-api/Ads-API/api-patterns)
+- [Sign up](https://ads.snapchat.com)
+- [Support](https://businesshelp.snapchat.com)
+- [Blog](https://eng.snap.com/)
+- [Terms of service](https://snap.com/terms)
+- [Privacy policy](https://snap.com/privacy/privacy-policy)
+- [GitHub](https://github.com/Snapchat)
+
+## API Evangelist rating
+
+**Kin Score 55.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 48.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 28.9 |
+
+**Agent readiness 39.3** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/snap/](https://apis.io/providers/snap/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Snap: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/snap/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
